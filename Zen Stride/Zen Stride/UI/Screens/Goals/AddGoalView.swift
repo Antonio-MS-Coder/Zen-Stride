@@ -210,7 +210,7 @@ struct AddGoalView: View {
                 
                 Spacer()
                 
-                PremiumToggle(isOn: $hasDeadline)
+                PremiumToggle(isOn: $hasDeadline, title: "Set Deadline")
             }
             
             if hasDeadline {

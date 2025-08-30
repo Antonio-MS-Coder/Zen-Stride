@@ -50,7 +50,7 @@ struct LogWinsView: View {
         .onAppear {
             updateTodaysWins()
         }
-        .onChange(of: wins) { _ in
+        .onChange(of: wins) {
             updateTodaysWins()
         }
     }

@@ -63,10 +63,14 @@ extension Font {
     static let notionFootnote = Font.system(size: 12, weight: .regular, design: .default)
     
     // Premium fonts for compatibility
+    static let premiumTitle1 = Font.system(size: 28, weight: .bold, design: .rounded)
     static let premiumTitle2 = Font.system(size: 22, weight: .bold, design: .rounded)
+    static let premiumTitle3 = Font.system(size: 20, weight: .semibold, design: .rounded)
     static let premiumHeadline = Font.system(size: 17, weight: .semibold, design: .rounded)
+    static let premiumBody = Font.system(size: 17, weight: .regular, design: .rounded)
     static let premiumCallout = Font.system(size: 16, weight: .regular, design: .rounded)
     static let premiumCaption1 = Font.system(size: 12, weight: .regular, design: .rounded)
+    static let premiumCaption2 = Font.system(size: 11, weight: .regular, design: .rounded)
 }
 
 // MARK: - Spacing System (8pt Grid)
@@ -83,6 +87,7 @@ extension CGFloat {
     
     // Legacy spacing for compatibility
     static let spacing4: CGFloat = 4
+    static let spacing6: CGFloat = 6
     static let spacing8: CGFloat = 8
     static let spacing12: CGFloat = 12
     static let spacing16: CGFloat = 16
@@ -102,6 +107,9 @@ extension CGFloat {
     static let notionCornerFull: CGFloat = 999
     
     // Legacy radius for compatibility
+    static let radiusS: CGFloat = 4
+    static let radiusM: CGFloat = 8
+    static let radiusL: CGFloat = 12
     static let radiusXL: CGFloat = 16
     static let radius2XL: CGFloat = 20
 }
@@ -113,8 +121,28 @@ extension Animation {
     static let notionSlow = Animation.easeInOut(duration: 0.3)
     
     // Premium animations for compatibility
+    static let premiumQuick = Animation.easeInOut(duration: 0.2)
     static let premiumBounce = Animation.spring(response: 0.5, dampingFraction: 0.6)
     static let premiumSpring = Animation.spring(response: 0.4, dampingFraction: 0.8)
+}
+
+// MARK: - Premium Shadow Extensions
+extension View {
+    func premiumShadowXS() -> some View {
+        self.shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
+    }
+    
+    func premiumShadowS() -> some View {
+        self.shadow(color: .black.opacity(0.08), radius: 4, x: 0, y: 2)
+    }
+    
+    func premiumShadowM() -> some View {
+        self.shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
+    }
+    
+    func premiumShadowL() -> some View {
+        self.shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: 6)
+    }
 }
 
 // MARK: - Minimal Card Modifier
