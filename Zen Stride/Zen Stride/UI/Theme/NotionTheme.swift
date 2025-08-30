@@ -122,6 +122,7 @@ extension Animation {
     
     // Premium animations for compatibility
     static let premiumQuick = Animation.easeInOut(duration: 0.2)
+    static let premiumSmooth = Animation.easeInOut(duration: 0.3)
     static let premiumBounce = Animation.spring(response: 0.5, dampingFraction: 0.6)
     static let premiumSpring = Animation.spring(response: 0.4, dampingFraction: 0.8)
 }

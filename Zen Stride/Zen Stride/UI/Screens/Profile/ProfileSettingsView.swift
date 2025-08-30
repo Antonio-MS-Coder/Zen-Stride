@@ -131,69 +131,87 @@ struct ProfileSettingsView: View {
                 .foregroundColor(.premiumGray3)
                 .tracking(1.2)
             
-            VStack(spacing: 0) {
-                // Daily Goal
-                SettingRow(
-                    icon: "target",
-                    title: "Daily Goal",
-                    value: "\(dailyGoal) wins"
-                ) {
-                    HStack {
-                        ForEach([3, 5, 7, 10], id: \.self) { goal in
-                            Button {
-                                withAnimation(.premiumSmooth) {
-                                    dailyGoal = goal
-                                    hapticFeedback(.light)
-                                }
-                            } label: {
-                                Text("\(goal)")
-                                    .font(.premiumCallout)
-                                    .foregroundColor(dailyGoal == goal ? .white : .premiumGray2)
-                                    .frame(width: 40, height: 32)
-                                    .background(
-                                        RoundedRectangle(cornerRadius: .radiusS)
-                                            .fill(dailyGoal == goal ? Color.premiumIndigo : Color.premiumGray5.opacity(0.3))
-                                    )
-                            }
-                        }
-                    }
-                }
-                
+            settingsCard
+        }
+    }
+    
+    private var settingsCard: some View {
+        VStack(spacing: 0) {
+            dailyGoalRow
+            
+            Divider()
+                .padding(.horizontal, .spacing16)
+            
+            reminderRow
+            
+            if reminderEnabled {
                 Divider()
                     .padding(.horizontal, .spacing16)
                 
-                // Reminders
-                SettingRow(
-                    icon: "bell.fill",
-                    title: "Daily Reminder",
-                    value: reminderEnabled ? "On" : "Off"
-                ) {
-                    Toggle("", isOn: $reminderEnabled)
-                        .labelsHidden()
-                        .onChange(of: reminderEnabled) {
-                            hapticFeedback(.light)
-                        }
-                }
-                
-                if reminderEnabled {
-                    Divider()
-                        .padding(.horizontal, .spacing16)
-                    
-                    SettingRow(
-                        icon: "clock.fill",
-                        title: "Reminder Time",
-                        value: timeString(from: reminderTime)
-                    ) {
-                        DatePicker("", selection: $reminderTime, displayedComponents: .hourAndMinute)
-                            .labelsHidden()
-                    }
+                reminderTimeRow
+            }
+        }
+        .background(
+            RoundedRectangle(cornerRadius: .radiusL)
+                .fill(Color.white)
+        )
+        .premiumShadowXS()
+    }
+    
+    private var dailyGoalRow: some View {
+        SettingRow(
+            icon: "target",
+            title: "Daily Goal",
+            value: "\(dailyGoal) wins"
+        ) {
+            HStack {
+                ForEach([3, 5, 7, 10], id: \.self) { goal in
+                    dailyGoalButton(for: goal)
                 }
             }
-            .background(
-                RoundedRectangle(cornerRadius: .radiusL)
-                    .fill(Color.white)
-            )
-            .premiumShadowXS()
+        }
+    }
+    
+    private func dailyGoalButton(for goal: Int) -> some View {
+        Button {
+            withAnimation(.premiumSmooth) {
+                dailyGoal = goal
+                hapticFeedback(.light)
+            }
+        } label: {
+            Text("\(goal)")
+                .font(.premiumCallout)
+                .foregroundColor(dailyGoal == goal ? .white : .premiumGray2)
+                .frame(width: 40, height: 32)
+                .background(
+                    RoundedRectangle(cornerRadius: .radiusS)
+                        .fill(dailyGoal == goal ? Color.premiumIndigo : Color.premiumGray5.opacity(0.3))
+                )
+        }
+    }
+    
+    private var reminderRow: some View {
+        SettingRow(
+            icon: "bell.fill",
+            title: "Daily Reminder",
+            value: reminderEnabled ? "On" : "Off"
+        ) {
+            Toggle("", isOn: $reminderEnabled)
+                .labelsHidden()
+                .onChange(of: reminderEnabled) {
+                    hapticFeedback(.light)
+                }
+        }
+    }
+    
+    private var reminderTimeRow: some View {
+        SettingRow(
+            icon: "clock.fill",
+            title: "Reminder Time",
+            value: timeString(from: reminderTime)
+        ) {
+            DatePicker("", selection: $reminderTime, displayedComponents: .hourAndMinute)
+                .labelsHidden()
         }
     }
     

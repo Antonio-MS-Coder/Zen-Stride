@@ -15,6 +15,11 @@ class ZenStrideDataStore: ObservableObject {
     @Published var wins: [MicroWin] = []
     @Published var streakDays: Int = 0
     
+    // Computed property for all wins
+    var allWins: [MicroWin] {
+        wins
+    }
+    
     init() {
         // Initialize with empty data for fresh start
         calculateStreak()
@@ -58,6 +63,27 @@ class ZenStrideDataStore: ObservableObject {
         habits.removeAll()
         wins.removeAll()
         streakDays = 0
+    }
+    
+    func getMonthlyTrend() -> Double {
+        let calendar = Calendar.current
+        let now = Date()
+        
+        // Get wins from last 30 days
+        let thirtyDaysAgo = calendar.date(byAdding: .day, value: -30, to: now)!
+        let recentWins = wins.filter { $0.timestamp > thirtyDaysAgo }
+        
+        // Get wins from previous 30 days
+        let sixtyDaysAgo = calendar.date(byAdding: .day, value: -60, to: now)!
+        let previousWins = wins.filter { $0.timestamp > sixtyDaysAgo && $0.timestamp <= thirtyDaysAgo }
+        
+        // Calculate trend
+        if previousWins.isEmpty {
+            return recentWins.isEmpty ? 0 : 1.0
+        }
+        
+        let trend = Double(recentWins.count - previousWins.count) / Double(previousWins.count)
+        return max(-1.0, min(1.0, trend)) // Clamp between -1 and 1
     }
     
     private func calculateStreak() {
