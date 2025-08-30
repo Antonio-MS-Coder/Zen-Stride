@@ -7,7 +7,10 @@ struct QuickLogView: View {
     @State private var selectedHabit: QuickHabit?
     @State private var customValue = ""
     @State private var showingCustomInput = false
+    // Always start in quick mode for minimal friction
     @State private var quickLogMode = true
+    @State private var showCelebration = false
+    @State private var currentCelebration: CelebrationData?
     
     // Predefined common micro-wins
     let quickHabits = [
@@ -57,6 +60,18 @@ struct QuickLogView: View {
                 .padding(.horizontal, .spacing20)
                 .padding(.top, .spacing20)
             }
+            .overlay(
+                // Celebration overlay
+                Group {
+                    if showCelebration, let celebration = currentCelebration {
+                        EnhancedCelebrationView(
+                            celebration: celebration,
+                            isPresented: $showCelebration
+                        )
+                        .zIndex(100)
+                    }
+                }
+            )
         }
     }
     
@@ -154,11 +169,20 @@ struct QuickLogView: View {
                     quickLogMode = false
                 }
             } label: {
-                Text("More options")
-                    .font(.premiumCallout)
-                    .foregroundColor(.premiumGray2)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, .spacing12)
+                HStack(spacing: .spacing8) {
+                    Text("More options")
+                        .font(.premiumCallout)
+                        .foregroundColor(.premiumGray3)
+                    Image(systemName: "ellipsis.circle")
+                        .font(.system(size: 16))
+                        .foregroundColor(.premiumGray3)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, .spacing12)
+                .background(
+                    RoundedRectangle(cornerRadius: .radiusM)
+                        .fill(Color.premiumGray6.opacity(0.5))
+                )
             }
         }
     }
@@ -237,8 +261,13 @@ struct QuickLogView: View {
         }
     }
     
-    // MARK: - Quick Win Helper
+    // MARK: - Quick Win Helper with Celebration
     private func logQuickWin(_ name: String, _ value: String, _ unit: String, _ icon: String, _ color: Color) {
+        // Get contextual celebration
+        let celebration = ContextualCelebration.getCelebration(for: name, value: value)
+        currentCelebration = celebration
+        showCelebration = true
+        
         let win = MicroWin(
             habitName: name,
             value: value,
@@ -248,17 +277,24 @@ struct QuickLogView: View {
             timestamp: Date()
         )
         
-        hapticFeedback(.medium)
-        onComplete(win)
-        dismiss()
+        // Delay completion to show celebration
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            onComplete(win)
+            dismiss()
+        }
     }
     
-    // MARK: - Log Win
+    // MARK: - Log Win with Celebration
     private func logWin(habit: QuickHabit, value: String) {
         // Parse the value to extract number
         let components = value.split(separator: " ")
         let numericValue = String(components.first ?? "")
         let unit = components.count > 1 ? String(components.last ?? "") : habit.unit
+        
+        // Get contextual celebration
+        let celebration = ContextualCelebration.getCelebration(for: habit.name, value: numericValue)
+        currentCelebration = celebration
+        showCelebration = true
         
         let win = MicroWin(
             habitName: habit.name,
@@ -269,9 +305,11 @@ struct QuickLogView: View {
             timestamp: Date()
         )
         
-        hapticFeedback(.medium)
-        onComplete(win)
-        dismiss()
+        // Delay completion to show celebration
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            onComplete(win)
+            dismiss()
+        }
     }
     
     private func hapticFeedback(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {

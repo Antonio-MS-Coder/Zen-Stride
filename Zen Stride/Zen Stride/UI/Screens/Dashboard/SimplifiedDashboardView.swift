@@ -48,26 +48,27 @@ struct SimplifiedDashboardView: View {
     // MARK: - Header
     private var headerSection: some View {
         VStack(alignment: .leading, spacing: .spacing8) {
-            Text(getGreeting())
+            Text(getEmotionalGreeting().greeting)
                 .font(.premiumCaption1)
-                .foregroundColor(.premiumGray3)
+                .foregroundColor(.premiumIndigo.opacity(0.7))
+                .tracking(0.5)
             
-            Text("Your Goals")
+            Text(getEmotionalGreeting().subtitle)
                 .font(.premiumLargeTitle)
                 .foregroundColor(.premiumGray1)
         }
     }
     
-    // MARK: - Update Reminders
+    // MARK: - Update Reminders (Gentle Invitations)
     private var updateRemindersSection: some View {
         VStack(alignment: .leading, spacing: .spacing12) {
-            Text("NEEDS UPDATE")
+            Text("READY FOR CHECK-IN")
                 .font(.premiumCaption1)
-                .foregroundColor(.premiumGray3)
+                .foregroundColor(.premiumIndigo.opacity(0.7))
                 .tracking(1.2)
             
             ForEach(goalsNeedingUpdate) { goal in
-                UpdateReminderCard(goal: goal) {
+                GentleInvitationCard(goal: goal) {
                     selectedGoal = goal
                 }
             }
@@ -143,14 +144,60 @@ struct SimplifiedDashboardView: View {
         !completedGoals.isEmpty
     }
     
-    private func getGreeting() -> String {
+    private func getEmotionalGreeting() -> (greeting: String, subtitle: String) {
         let hour = Calendar.current.component(.hour, from: Date())
-        switch hour {
-        case 5..<12: return "GOOD MORNING"
-        case 12..<17: return "GOOD AFTERNOON"
-        case 17..<22: return "GOOD EVENING"
-        default: return "GOOD NIGHT"
+        let dayOfWeek = Calendar.current.component(.weekday, from: Date())
+        let hasRecentProgress = checkRecentProgress()
+        let daysSinceLastUpdate = calculateDaysSinceLastUpdate()
+        
+        // Check for returning users
+        if daysSinceLastUpdate > 3 {
+            return ("Welcome back", "Every return is a victory")
         }
+        
+        // Weekend encouragement
+        if dayOfWeek == 1 || dayOfWeek == 7 {
+            if hasRecentProgress {
+                return ("Weekend warrior", "Keep the momentum going")
+            } else {
+                return ("Weekend vibes", "Perfect time for progress")
+            }
+        }
+        
+        // Time-based emotional greetings
+        switch hour {
+        case 5..<9:
+            return ("Fresh start", "Your intentions shape the day")
+        case 9..<12:
+            return ("Building momentum", "Small steps, big impact")
+        case 12..<15:
+            return ("Midday check-in", "Progress over perfection")
+        case 15..<18:
+            return ("Afternoon push", "You're closer than this morning")
+        case 18..<22:
+            return ("Evening reflection", "Today's efforts matter")
+        case 22..<24:
+            return ("Night owl", "Dedication after dark")
+        default:
+            return ("Late night", "Rest is part of progress")
+        }
+    }
+    
+    private func checkRecentProgress() -> Bool {
+        // Check if user has made progress in last 24 hours
+        let oneDayAgo = Date().addingTimeInterval(-86400)
+        return goals.contains { goal in
+            goal.updates.contains { $0.date > oneDayAgo }
+        }
+    }
+    
+    private func calculateDaysSinceLastUpdate() -> Int {
+        let mostRecentUpdate = goals.compactMap { goal in
+            goal.updates.max(by: { $0.date < $1.date })?.date
+        }.max() ?? Date()
+        
+        let calendar = Calendar.current
+        return calendar.dateComponents([.day], from: mostRecentUpdate, to: Date()).day ?? 0
     }
     
     private func binding(for goal: Goal) -> Binding<Goal> {
@@ -192,28 +239,13 @@ struct SimplifiedGoalCard: View {
                     }
                 }
                 
-                // Progress visualization
+                // Progress visualization with momentum
                 VStack(alignment: .leading, spacing: .spacing8) {
-                    // Progress bar
-                    GeometryReader { geometry in
-                        ZStack(alignment: .leading) {
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(Color.premiumGray6)
-                                .frame(height: 8)
-                            
-                            RoundedRectangle(cornerRadius: 4)
-                                .fill(
-                                    LinearGradient(
-                                        colors: progressColors(for: goal.progress),
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                    )
-                                )
-                                .frame(width: geometry.size.width * goal.progress, height: 8)
-                                .animation(.premiumSpring, value: goal.progress)
-                        }
-                    }
-                    .frame(height: 8)
+                    // Enhanced progress bar with momentum effects
+                    EmotionalProgressBar(
+                        progress: goal.progress,
+                        colors: progressColors(for: goal.progress)
+                    )
                     
                     // Progress text
                     HStack {
@@ -265,38 +297,82 @@ struct SimplifiedGoalCard: View {
     }
 }
 
-struct UpdateReminderCard: View {
+struct GentleInvitationCard: View {
     let goal: Goal
     let onTap: () -> Void
+    @State private var breathe = false
+    
+    private var invitationText: String {
+        let calendar = Calendar.current
+        let lastUpdate = goal.updates.max(by: { $0.date < $1.date })?.date ?? goal.createdDate
+        let daysSince = calendar.dateComponents([.day], from: lastUpdate, to: Date()).day ?? 0
+        
+        switch daysSince {
+        case 0: return "Today's update?"
+        case 1: return "Ready for today's check-in?"
+        case 2...3: return "When you're ready"
+        case 4...7: return "No pressure, just checking in"
+        default: return "Whenever feels right"
+        }
+    }
     
     var body: some View {
         Button(action: onTap) {
-            HStack {
-                Circle()
-                    .fill(Color.premiumAmber.opacity(0.2))
-                    .frame(width: 8, height: 8)
+            HStack(spacing: .spacing12) {
+                // Soft, breathing dot instead of warning
+                ZStack {
+                    Circle()
+                        .fill(Color.premiumIndigo.opacity(0.15))
+                        .frame(width: 12, height: 12)
+                        .scaleEffect(breathe ? 1.3 : 1.0)
+                        .opacity(breathe ? 0.5 : 1.0)
+                    
+                    Circle()
+                        .fill(Color.premiumIndigo.opacity(0.6))
+                        .frame(width: 6, height: 6)
+                }
+                .animation(
+                    Animation.easeInOut(duration: 2)
+                        .repeatForever(autoreverses: true),
+                    value: breathe
+                )
                 
-                Text(goal.name)
-                    .font(.premiumCallout)
-                    .foregroundColor(.premiumGray1)
+                VStack(alignment: .leading, spacing: .spacing4) {
+                    Text(goal.name)
+                        .font(.premiumCallout)
+                        .foregroundColor(.premiumGray1)
+                    
+                    Text(invitationText)
+                        .font(.premiumCaption2)
+                        .foregroundColor(.premiumGray3)
+                }
                 
                 Spacer()
                 
-                Text("Update now")
-                    .font(.premiumCaption1)
-                    .foregroundColor(.premiumIndigo)
-                
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 12))
-                    .foregroundColor(.premiumIndigo)
+                Image(systemName: "arrow.right.circle")
+                    .font(.system(size: 20))
+                    .foregroundColor(.premiumIndigo.opacity(0.5))
             }
-            .padding(.spacing12)
+            .padding(.horizontal, .spacing16)
+            .padding(.vertical, .spacing14)
             .background(
                 RoundedRectangle(cornerRadius: .radiusM)
-                    .fill(Color.premiumAmber.opacity(0.1))
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color.premiumIndigo.opacity(0.03),
+                                Color.premiumIndigo.opacity(0.06)
+                            ],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
             )
         }
         .buttonStyle(PlainButtonStyle())
+        .onAppear {
+            breathe = true
+        }
     }
 }
 
@@ -330,38 +406,169 @@ struct CompletedGoalCard: View {
     }
 }
 
+// MARK: - Emotional Progress Bar
+struct EmotionalProgressBar: View {
+    let progress: Double
+    let colors: [Color]
+    @State private var showMomentum = false
+    @State private var sparkleOffset: CGFloat = 0
+    
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                // Base track
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color.premiumGray6)
+                    .frame(height: 8)
+                
+                // Progress bar with gradient
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(
+                        LinearGradient(
+                            colors: colors,
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .frame(width: geometry.size.width * progress, height: 8)
+                    .animation(.interpolatingSpring(stiffness: 120, damping: 15), value: progress)
+                
+                // Momentum glow effect when progress increases
+                if showMomentum && progress > 0 && progress < 1 {
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    colors.first?.opacity(0.6) ?? Color.clear,
+                                    colors.last?.opacity(0.3) ?? Color.clear,
+                                    Color.clear
+                                ],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .frame(width: geometry.size.width * progress + 30, height: 12)
+                        .blur(radius: 6)
+                        .opacity(showMomentum ? 0.8 : 0)
+                        .animation(.easeOut(duration: 1.2), value: showMomentum)
+                }
+                
+                // Leading edge sparkle for active progress
+                if progress > 0 && progress < 1 {
+                    Circle()
+                        .fill(Color.white.opacity(0.9))
+                        .frame(width: 10, height: 10)
+                        .blur(radius: 1)
+                        .offset(x: geometry.size.width * progress - 5 + sparkleOffset)
+                        .opacity(0.8)
+                        .animation(
+                            Animation.easeInOut(duration: 2)
+                                .repeatForever(autoreverses: true),
+                            value: sparkleOffset
+                        )
+                }
+            }
+        }
+        .frame(height: 8)
+        .onAppear {
+            sparkleOffset = 2
+        }
+        .onChange(of: progress) { oldValue, newValue in
+            if newValue > oldValue {
+                showMomentum = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    showMomentum = false
+                }
+            }
+        }
+    }
+}
+
 struct EmptyGoalsCard: View {
     let onTap: () -> Void
+    @State private var breathe = false
+    @State private var pulse = false
     
     var body: some View {
         Button(action: onTap) {
-            VStack(spacing: .spacing16) {
-                Image(systemName: "target")
-                    .font(.system(size: 32))
-                    .foregroundColor(.premiumIndigo)
+            VStack(spacing: .spacing20) {
+                // Breathing icon container
+                ZStack {
+                    Circle()
+                        .fill(Color.premiumIndigo.opacity(0.08))
+                        .frame(width: 80, height: 80)
+                        .scaleEffect(breathe ? 1.15 : 1.0)
+                        .opacity(breathe ? 0.6 : 1.0)
+                    
+                    Circle()
+                        .fill(Color.premiumIndigo.opacity(0.1))
+                        .frame(width: 60, height: 60)
+                        .scaleEffect(pulse ? 1.1 : 1.0)
+                    
+                    Image(systemName: "plus")
+                        .font(.system(size: 28, weight: .medium))
+                        .foregroundColor(.premiumIndigo)
+                        .scaleEffect(breathe ? 1.05 : 1.0)
+                }
+                .animation(
+                    Animation.easeInOut(duration: 3)
+                        .repeatForever(autoreverses: true),
+                    value: breathe
+                )
+                .animation(
+                    Animation.easeInOut(duration: 2)
+                        .repeatForever(autoreverses: true)
+                        .delay(0.5),
+                    value: pulse
+                )
                 
-                Text("Set Your First Goal")
-                    .font(.premiumHeadline)
-                    .foregroundColor(.premiumGray1)
-                
-                Text("Define what success looks like for you")
-                    .font(.premiumCallout)
-                    .foregroundColor(.premiumGray3)
-                    .multilineTextAlignment(.center)
+                VStack(spacing: .spacing8) {
+                    Text("Ready when you are")
+                        .font(.premiumHeadline)
+                        .foregroundColor(.premiumGray1)
+                    
+                    Text("No rush, no pressure")
+                        .font(.premiumCallout)
+                        .foregroundColor(.premiumGray3)
+                        .multilineTextAlignment(.center)
+                }
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, .spacing40)
             .padding(.horizontal, .spacing24)
             .background(
                 RoundedRectangle(cornerRadius: .radiusL)
-                    .fill(Color.white)
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color.white,
+                                Color.premiumGray6.opacity(0.3)
+                            ],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
                     .overlay(
                         RoundedRectangle(cornerRadius: .radiusL)
-                            .stroke(style: StrokeStyle(lineWidth: 2, dash: [8]))
-                            .foregroundColor(.premiumGray5)
+                            .stroke(
+                                LinearGradient(
+                                    colors: [
+                                        Color.premiumIndigo.opacity(0.1),
+                                        Color.premiumIndigo.opacity(0.05)
+                                    ],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                lineWidth: 1.5
+                            )
                     )
             )
+            .premiumShadowXS()
         }
         .buttonStyle(PlainButtonStyle())
+        .onAppear {
+            breathe = true
+            pulse = true
+        }
     }
 }
