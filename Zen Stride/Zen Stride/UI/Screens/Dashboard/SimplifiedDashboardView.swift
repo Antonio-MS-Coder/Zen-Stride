@@ -354,7 +354,7 @@ struct GentleInvitationCard: View {
                     .foregroundColor(.premiumIndigo.opacity(0.5))
             }
             .padding(.horizontal, .spacing16)
-            .padding(.vertical, .spacing14)
+            .padding(.vertical, .spacing12)
             .background(
                 RoundedRectangle(cornerRadius: .radiusM)
                     .fill(

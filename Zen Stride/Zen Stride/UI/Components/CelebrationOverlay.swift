@@ -1,7 +1,7 @@
 import SwiftUI
 
-// MARK: - Particle View Helper
-struct ParticleView: View {
+// MARK: - Simple Particle View Helper
+struct SimpleParticleView: View {
     let index: Int
     let scale: CGFloat
     let color: Color
@@ -81,7 +81,7 @@ struct CelebrationOverlay: View {
     
     private var particleEffects: some View {
         ForEach(0..<8, id: \.self) { index in
-            ParticleView(
+            SimpleParticleView(
                 index: index,
                 scale: particleScale,
                 color: win.color
