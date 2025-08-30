@@ -64,6 +64,9 @@ extension Font {
     
     // Premium fonts for compatibility
     static let premiumTitle2 = Font.system(size: 22, weight: .bold, design: .rounded)
+    static let premiumHeadline = Font.system(size: 17, weight: .semibold, design: .rounded)
+    static let premiumCallout = Font.system(size: 16, weight: .regular, design: .rounded)
+    static let premiumCaption1 = Font.system(size: 12, weight: .regular, design: .rounded)
 }
 
 // MARK: - Spacing System (8pt Grid)
@@ -85,7 +88,9 @@ extension CGFloat {
     static let spacing16: CGFloat = 16
     static let spacing20: CGFloat = 20
     static let spacing24: CGFloat = 24
+    static let spacing28: CGFloat = 28
     static let spacing32: CGFloat = 32
+    static let spacing40: CGFloat = 40
 }
 
 // MARK: - Corner Radius
@@ -98,6 +103,7 @@ extension CGFloat {
     
     // Legacy radius for compatibility
     static let radiusXL: CGFloat = 16
+    static let radius2XL: CGFloat = 20
 }
 
 // MARK: - Animation Durations (Minimal)
@@ -105,6 +111,10 @@ extension Animation {
     static let notionQuick = Animation.easeInOut(duration: 0.15)
     static let notionDefault = Animation.easeInOut(duration: 0.2)
     static let notionSlow = Animation.easeInOut(duration: 0.3)
+    
+    // Premium animations for compatibility
+    static let premiumBounce = Animation.spring(response: 0.5, dampingFraction: 0.6)
+    static let premiumSpring = Animation.spring(response: 0.4, dampingFraction: 0.8)
 }
 
 // MARK: - Minimal Card Modifier

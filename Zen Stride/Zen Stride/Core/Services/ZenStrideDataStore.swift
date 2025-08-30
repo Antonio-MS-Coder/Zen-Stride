@@ -1,13 +1,23 @@
 import SwiftUI
 import Combine
 
+// Extension to remove duplicates from array
+extension Array where Element: Hashable {
+    func removingDuplicates() -> [Element] {
+        var seen = Set<Element>()
+        return filter { seen.insert($0).inserted }
+    }
+}
+
 // Simple data store for managing app data
 class ZenStrideDataStore: ObservableObject {
     @Published var habits: [HabitModel] = []
     @Published var wins: [MicroWin] = []
+    @Published var streakDays: Int = 0
     
     init() {
         // Initialize with empty data for fresh start
+        calculateStreak()
     }
     
     func addHabit(_ habit: HabitModel) {
@@ -26,10 +36,12 @@ class ZenStrideDataStore: ObservableObject {
     
     func addWin(_ win: MicroWin) {
         wins.append(win)
+        calculateStreak()
     }
     
     func removeWin(_ win: MicroWin) {
         wins.removeAll { $0.id == win.id }
+        calculateStreak()
     }
     
     func getWinsForHabit(_ habitName: String) -> [MicroWin] {
@@ -45,5 +57,38 @@ class ZenStrideDataStore: ObservableObject {
     func reset() {
         habits.removeAll()
         wins.removeAll()
+        streakDays = 0
+    }
+    
+    private func calculateStreak() {
+        guard !wins.isEmpty else {
+            streakDays = 0
+            return
+        }
+        
+        let calendar = Calendar.current
+        let sortedDates = wins.map { calendar.startOfDay(for: $0.timestamp) }
+            .sorted(by: >)
+            .removingDuplicates()
+        
+        guard let mostRecent = sortedDates.first,
+              calendar.isDateInToday(mostRecent) || calendar.isDateInYesterday(mostRecent) else {
+            streakDays = 0
+            return
+        }
+        
+        var streak = 0
+        var currentDate = calendar.isDateInToday(mostRecent) ? mostRecent : calendar.startOfDay(for: Date())
+        
+        for date in sortedDates {
+            if calendar.isDate(date, inSameDayAs: currentDate) {
+                streak += 1
+                currentDate = calendar.date(byAdding: .day, value: -1, to: currentDate)!
+            } else {
+                break
+            }
+        }
+        
+        streakDays = streak
     }
 }

@@ -79,7 +79,7 @@ struct HabitModel: Identifiable {
 }
 
 // MARK: - MicroWin Model
-struct MicroWin: Identifiable {
+struct MicroWin: Identifiable, Equatable {
     let id = UUID()
     let habitName: String
     let value: String
@@ -87,6 +87,10 @@ struct MicroWin: Identifiable {
     let icon: String
     let color: Color
     let timestamp: Date
+    
+    static func == (lhs: MicroWin, rhs: MicroWin) -> Bool {
+        lhs.id == rhs.id
+    }
 }
 
 #Preview {
