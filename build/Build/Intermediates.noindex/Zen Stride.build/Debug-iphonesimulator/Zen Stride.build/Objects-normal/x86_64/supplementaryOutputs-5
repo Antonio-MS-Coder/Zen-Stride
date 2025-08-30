@@ -1,0 +1,30 @@
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Zen Stride/Zen Stride/UI/Screens/Progress/MinimalProgressView.swift":
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/MinimalProgressView.o"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/MinimalProgressView.d"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/MinimalProgressView.swiftdeps"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/MinimalProgressView.swiftconstvalues"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/MinimalProgressView.dia"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Zen Stride/Zen Stride/UI/Screens/Dashboard/CompassionateDashboardView.swift":
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/CompassionateDashboardView.d"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/CompassionateDashboardView.o"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/CompassionateDashboardView.dia"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/CompassionateDashboardView.swiftconstvalues"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/CompassionateDashboardView.swiftdeps"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Zen Stride/Zen Stride/UI/Navigation/PremiumMainTabView.swift":
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/PremiumMainTabView.swiftconstvalues"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/PremiumMainTabView.dia"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/PremiumMainTabView.o"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/PremiumMainTabView.d"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/PremiumMainTabView.swiftdeps"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Zen Stride/Zen Stride/Persistence.swift":
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/Persistence.d"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/Persistence.swiftdeps"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/Persistence.swiftconstvalues"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/Persistence.o"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/Persistence.dia"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Zen Stride/Zen Stride/UI/Screens/Habits/PremiumHabitDetailView.swift":
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/PremiumHabitDetailView.o"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/PremiumHabitDetailView.d"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/PremiumHabitDetailView.dia"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/PremiumHabitDetailView.swiftconstvalues"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Zen Stride.build/Debug-iphonesimulator/Zen Stride.build/Objects-normal/x86_64/PremiumHabitDetailView.swiftdeps"

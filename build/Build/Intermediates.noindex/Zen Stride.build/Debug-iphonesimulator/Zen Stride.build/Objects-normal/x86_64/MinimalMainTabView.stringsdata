@@ -1,0 +1,32 @@
+{
+  "source": "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Zen Stride/Zen Stride/MinimalMainTabView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Today",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Habits",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Progress",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 28
+        }
+      }
+    ]
+  },
+  "version": 1
+}

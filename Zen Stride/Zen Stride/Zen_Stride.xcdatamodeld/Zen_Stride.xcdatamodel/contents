@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
+    <!-- Habit Entity -->
+    <entity name="Habit" representedClassName="Habit" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="habitDescription" optional="YES" attributeType="String"/>
+        <attribute name="category" attributeType="String" defaultValueString="General"/>
+        <attribute name="colorHex" attributeType="String" defaultValueString="#4A90E2"/>
+        <attribute name="iconName" attributeType="String" defaultValueString="star.fill"/>
+        <attribute name="targetValue" attributeType="Double" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="targetUnit" attributeType="String" defaultValueString="times"/>
+        <attribute name="frequency" attributeType="String" defaultValueString="daily"/>
+        <attribute name="isActive" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="createdDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="reminderTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="motivationalMessage" optional="YES" attributeType="String"/>
+        <relationship name="progresses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Progress" inverseName="habit" inverseEntity="Progress"/>
+        <relationship name="streaks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Streak" inverseName="habit" inverseEntity="Streak"/>
+    </entity>
+    
+    <!-- Progress Entity -->
+    <entity name="Progress" representedClassName="Progress" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="value" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="completedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="isComplete" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <relationship name="habit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Habit" inverseName="progresses" inverseEntity="Habit"/>
+    </entity>
+    
+    <!-- Streak Entity -->
+    <entity name="Streak" representedClassName="Streak" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="startDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="currentLength" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="longestLength" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isActive" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <relationship name="habit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Habit" inverseName="streaks" inverseEntity="Habit"/>
+    </entity>
+    
+    <!-- Achievement Entity -->
+    <entity name="Achievement" representedClassName="Achievement" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="achievementDescription" attributeType="String"/>
+        <attribute name="iconName" attributeType="String"/>
+        <attribute name="badgeColorHex" attributeType="String"/>
+        <attribute name="category" attributeType="String"/>
+        <attribute name="requirement" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="progress" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isUnlocked" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="unlockedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="points" attributeType="Integer 32" defaultValueString="10" usesScalarValueType="YES"/>
+    </entity>
+    
+    <!-- User Entity (for settings and stats) -->
+    <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="dailyGoal" attributeType="Integer 32" defaultValueString="3" usesScalarValueType="YES"/>
+        <attribute name="totalPoints" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="currentLevel" attributeType="Integer 32" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="joinedDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="preferredReminderTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="notificationsEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="soundEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="hapticsEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="motivationalQuotesEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="hasCompletedOnboarding" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+    </entity>
+    
+    <elements>
+        <element name="Habit" positionX="-63" positionY="-18" width="128" height="254"/>
+        <element name="Progress" positionX="126" positionY="36" width="128" height="134"/>
+        <element name="Streak" positionX="126" positionY="200" width="128" height="134"/>
+        <element name="Achievement" positionX="-63" positionY="280" width="128" height="194"/>
+        <element name="User" positionX="-243" positionY="36" width="128" height="209"/>
+    </elements>
+</model>

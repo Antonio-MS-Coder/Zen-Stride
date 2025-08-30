@@ -1,0 +1,152 @@
+{
+  "source": "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Zen Stride/Zen Stride/UI/Screens/Dashboard/CompassionateDashboardView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Today's Intentions",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 164
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld of %lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 171
+        }
+      },
+      {
+        "comment": "",
+        "key": "Start small, grow steadily",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 201
+        }
+      },
+      {
+        "comment": "",
+        "key": "Choose one habit that matters to you",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 205
+        }
+      },
+      {
+        "comment": "",
+        "key": "Add Your First Habit",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 209
+        }
+      },
+      {
+        "comment": "",
+        "key": "Your Progress Today",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 230
+        }
+      },
+      {
+        "comment": "",
+        "key": "I did some",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 428
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mark complete",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 434
+        }
+      },
+      {
+        "comment": "",
+        "key": "Add note",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 441
+        }
+      },
+      {
+        "comment": "",
+        "key": "Unmark",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 448
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tap to log progress",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 464
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld/%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 470
+        }
+      },
+      {
+        "comment": "",
+        "key": "Add Habit - Focus on what matters to you",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 584
+        }
+      },
+      {
+        "comment": "",
+        "key": "New Habit",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 585
+        }
+      },
+      {
+        "comment": "",
+        "key": "Reflection for %@",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 600
+        }
+      },
+      {
+        "comment": "",
+        "key": "Reflection",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 601
+        }
+      },
+      {
+        "comment": "",
+        "key": "Daily Reflection",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 615
+        }
+      },
+      {
+        "comment": "",
+        "key": "Reflect",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 616
+        }
+      }
+    ]
+  },
+  "version": 1
+}
