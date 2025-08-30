@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct Zen_StrideApp: App {
     let persistenceController = PersistenceController.shared
-    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = true // Skip onboarding for now
 
     init() {
         setupPremiumAppearance()
@@ -18,14 +18,9 @@ struct Zen_StrideApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if hasCompletedOnboarding {
-                SimpleTabView() // Use the new simplified interface
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                    .preferredColorScheme(.light) // Premium design optimized for light mode
-            } else {
-                OnboardingView(hasCompletedOnboarding: $hasCompletedOnboarding)
-                    .preferredColorScheme(.light)
-            }
+            SimpleTabView() // Use the new simplified interface
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .preferredColorScheme(.light) // Premium design optimized for light mode
         }
     }
     
