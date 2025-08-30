@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ProfileManagementView: View {
-    @Binding var habits: [HabitModel]
+    @EnvironmentObject var dataStore: ZenStrideDataStore
     @Environment(\.dismiss) private var dismiss
     @State private var showingAddHabit = false
     @State private var editingHabit: HabitModel?
@@ -39,10 +39,12 @@ struct ProfileManagementView: View {
                 }
             }
             .sheet(isPresented: $showingAddHabit) {
-                AddHabitView(habits: $habits)
+                AddHabitView()
+                    .environmentObject(dataStore)
             }
             .sheet(item: $editingHabit) { habit in
-                EditHabitView(habit: habit, habits: $habits)
+                EditHabitView(habit: habit)
+                    .environmentObject(dataStore)
             }
         }
     }
@@ -73,7 +75,7 @@ struct ProfileManagementView: View {
                     .font(.system(size: 24, weight: .bold))
                     .foregroundColor(.premiumGray1)
                 
-                Text("\(habits.count) active habits")
+                Text("\(dataStore.habits.count) active habits")
                     .font(.system(size: 16))
                     .foregroundColor(.premiumGray3)
             }
@@ -103,11 +105,11 @@ struct ProfileManagementView: View {
                 }
             }
             
-            if habits.isEmpty {
+            if dataStore.habits.isEmpty {
                 emptyHabitsView
             } else {
                 VStack(spacing: 12) {
-                    ForEach(habits) { habit in
+                    ForEach(dataStore.habits) { habit in
                         HabitManagementCard(
                             habit: habit,
                             onEdit: {
@@ -205,7 +207,7 @@ struct ProfileManagementView: View {
     // MARK: - Helpers
     private func deleteHabit(_ habit: HabitModel) {
         withAnimation {
-            habits.removeAll { $0.id == habit.id }
+            dataStore.removeHabit(habit)
         }
     }
 }
@@ -312,7 +314,7 @@ struct SettingsRow: View {
 
 // MARK: - Add Habit View
 struct AddHabitView: View {
-    @Binding var habits: [HabitModel]
+    @EnvironmentObject var dataStore: ZenStrideDataStore
     @Environment(\.dismiss) private var dismiss
     @State private var habitName = ""
     @State private var selectedIcon = "star.fill"
@@ -445,7 +447,7 @@ struct AddHabitView: View {
             unit: unit,
             isActive: true
         )
-        habits.append(newHabit)
+        dataStore.addHabit(newHabit)
         dismiss()
     }
 }
@@ -453,22 +455,22 @@ struct AddHabitView: View {
 // MARK: - Edit Habit View
 struct EditHabitView: View {
     let habit: HabitModel
-    @Binding var habits: [HabitModel]
+    @EnvironmentObject var dataStore: ZenStrideDataStore
     @Environment(\.dismiss) private var dismiss
     @State private var habitName: String
     @State private var selectedIcon: String
     @State private var selectedFrequency: String
     
-    init(habit: HabitModel, habits: Binding<[HabitModel]>) {
+    init(habit: HabitModel) {
         self.habit = habit
-        self._habits = habits
         self._habitName = State(initialValue: habit.name)
         self._selectedIcon = State(initialValue: habit.icon)
         self._selectedFrequency = State(initialValue: habit.frequency ?? "Daily")
     }
     
     var body: some View {
-        AddHabitView(habits: $habits) // Reuse the add view for editing
+        AddHabitView() // Reuse the add view for editing
+            .environmentObject(dataStore)
             .navigationTitle("Edit Habit")
             .onAppear {
                 // Pre-fill the fields

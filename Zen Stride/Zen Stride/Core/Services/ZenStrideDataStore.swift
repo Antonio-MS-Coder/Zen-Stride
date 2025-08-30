@@ -9,6 +9,41 @@ extension Array where Element: Hashable {
     }
 }
 
+// Make models Codable for persistence
+extension HabitModel: Codable {
+    enum CodingKeys: String, CodingKey {
+        case id, name, icon, frequency, unit, isActive
+    }
+}
+
+extension MicroWin: Codable {
+    enum CodingKeys: String, CodingKey {
+        case id, habitName, value, unit, icon, timestamp
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(habitName, forKey: .habitName)
+        try container.encode(value, forKey: .value)
+        try container.encode(unit, forKey: .unit)
+        try container.encode(icon, forKey: .icon)
+        try container.encode(timestamp, forKey: .timestamp)
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let id = try container.decode(UUID.self, forKey: .id)
+        let habitName = try container.decode(String.self, forKey: .habitName)
+        let value = try container.decode(String.self, forKey: .value)
+        let unit = try container.decode(String.self, forKey: .unit)
+        let icon = try container.decode(String.self, forKey: .icon)
+        let timestamp = try container.decode(Date.self, forKey: .timestamp)
+        
+        self.init(id: id, habitName: habitName, value: value, unit: unit, icon: icon, color: .premiumIndigo, timestamp: timestamp)
+    }
+}
+
 // Simple data store for managing app data
 class ZenStrideDataStore: ObservableObject {
     @Published var habits: [HabitModel] = []
@@ -28,33 +63,43 @@ class ZenStrideDataStore: ObservableObject {
     // Streak saver tokens (for gamification)
     @Published var streakSaverTokens: Int = 3
     
+    // UserDefaults keys
+    private let habitsKey = "zenStride.habits"
+    private let winsKey = "zenStride.wins"
+    private let tokensKey = "zenStride.tokens"
+    
     init() {
-        // Initialize with empty data for fresh start
+        loadFromUserDefaults()
         calculateStreak()
     }
     
     func addHabit(_ habit: HabitModel) {
         habits.append(habit)
+        saveToUserDefaults()
     }
     
     func removeHabit(_ habit: HabitModel) {
         habits.removeAll { $0.id == habit.id }
+        saveToUserDefaults()
     }
     
     func updateHabit(_ habit: HabitModel) {
         if let index = habits.firstIndex(where: { $0.id == habit.id }) {
             habits[index] = habit
+            saveToUserDefaults()
         }
     }
     
     func addWin(_ win: MicroWin) {
         wins.append(win)
         calculateStreak()
+        saveToUserDefaults()
     }
     
     func removeWin(_ win: MicroWin) {
         wins.removeAll { $0.id == win.id }
         calculateStreak()
+        saveToUserDefaults()
     }
     
     func getWinsForHabit(_ habitName: String) -> [MicroWin] {
@@ -71,6 +116,48 @@ class ZenStrideDataStore: ObservableObject {
         habits.removeAll()
         wins.removeAll()
         streakDays = 0
+        streakSaverTokens = 3
+        saveToUserDefaults()
+    }
+    
+    // MARK: - Persistence
+    private func saveToUserDefaults() {
+        let defaults = UserDefaults.standard
+        
+        // Save habits
+        if let habitsData = try? JSONEncoder().encode(habits) {
+            defaults.set(habitsData, forKey: habitsKey)
+        }
+        
+        // Save wins
+        if let winsData = try? JSONEncoder().encode(wins) {
+            defaults.set(winsData, forKey: winsKey)
+        }
+        
+        // Save tokens
+        defaults.set(streakSaverTokens, forKey: tokensKey)
+    }
+    
+    private func loadFromUserDefaults() {
+        let defaults = UserDefaults.standard
+        
+        // Load habits
+        if let habitsData = defaults.data(forKey: habitsKey),
+           let decodedHabits = try? JSONDecoder().decode([HabitModel].self, from: habitsData) {
+            habits = decodedHabits
+        }
+        
+        // Load wins
+        if let winsData = defaults.data(forKey: winsKey),
+           let decodedWins = try? JSONDecoder().decode([MicroWin].self, from: winsData) {
+            wins = decodedWins
+        }
+        
+        // Load tokens
+        streakSaverTokens = defaults.integer(forKey: tokensKey)
+        if streakSaverTokens == 0 {
+            streakSaverTokens = 3 // Default value
+        }
     }
     
     func getMonthlyTrend() -> Double {

@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct LogWinsView: View {
-    @Binding var habits: [HabitModel]
-    @Binding var wins: [MicroWin]
+    @EnvironmentObject var dataStore: ZenStrideDataStore
     @Binding var showingQuickLog: Bool
     @State private var todaysWins: [MicroWin] = []
+    @State private var showingProfile = false
     
     var body: some View {
         NavigationView {
@@ -23,7 +23,7 @@ struct LogWinsView: View {
                         headerSection
                         
                         // Quick action buttons
-                        if !habits.isEmpty {
+                        if !dataStore.habits.isEmpty {
                             quickActionsSection
                         }
                         
@@ -33,7 +33,7 @@ struct LogWinsView: View {
                         }
                         
                         // Empty state
-                        if habits.isEmpty && wins.isEmpty {
+                        if dataStore.habits.isEmpty && dataStore.wins.isEmpty {
                             emptyStateView
                         }
                     }
@@ -50,8 +50,12 @@ struct LogWinsView: View {
         .onAppear {
             updateTodaysWins()
         }
-        .onChange(of: wins) {
+        .onChange(of: dataStore.wins) {
             updateTodaysWins()
+        }
+        .sheet(isPresented: $showingProfile) {
+            ProfileManagementView()
+                .environmentObject(dataStore)
         }
     }
     
@@ -81,7 +85,7 @@ struct LogWinsView: View {
                 GridItem(.flexible()),
                 GridItem(.flexible())
             ], spacing: 12) {
-                ForEach(habits.prefix(4)) { habit in
+                ForEach(dataStore.habits.prefix(4)) { habit in
                     QuickActionCard(habit: habit) {
                         logQuickWin(for: habit)
                     }
@@ -128,30 +132,47 @@ struct LogWinsView: View {
                 .foregroundColor(.premiumGray4)
             
             VStack(spacing: 8) {
-                Text("Start your journey")
+                Text("Welcome to ZenStride!")
                     .font(.system(size: 20, weight: .semibold))
                     .foregroundColor(.premiumGray2)
                 
-                Text("Log your first win to begin")
+                Text("Start by creating your first habit")
                     .font(.system(size: 16))
                     .foregroundColor(.premiumGray3)
             }
             
-            Button {
-                showingQuickLog = true
-            } label: {
-                Text("Log First Win")
+            VStack(spacing: 12) {
+                Button {
+                    showingProfile = true
+                } label: {
+                    HStack {
+                        Image(systemName: "plus.circle.fill")
+                        Text("Create First Habit")
+                    }
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(.white)
-                    .padding(.horizontal, 32)
+                    .padding(.horizontal, 24)
                     .padding(.vertical, 14)
                     .background(
                         Capsule()
                             .fill(Color.premiumIndigo)
                     )
+                }
+                
+                Text("or")
+                    .font(.system(size: 14))
+                    .foregroundColor(.premiumGray4)
+                
+                Button {
+                    showingQuickLog = true
+                } label: {
+                    Text("Try Quick Log")
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(.premiumIndigo)
+                }
             }
         }
-        .padding(.top, 60)
+        .padding(.top, 40)
     }
     
     // MARK: - Floating Action Button
@@ -184,7 +205,7 @@ struct LogWinsView: View {
     private func updateTodaysWins() {
         let calendar = Calendar.current
         let today = Date()
-        todaysWins = wins.filter { win in
+        todaysWins = dataStore.wins.filter { win in
             calendar.isDate(win.timestamp, inSameDayAs: today)
         }
     }
@@ -208,9 +229,9 @@ struct LogWinsView: View {
             color: habit.color,
             timestamp: Date()
         )
-        wins.append(win)
+        dataStore.addWin(win)
         
-        // Trigger celebration
+        // Simple celebration feedback
         withAnimation(.spring()) {
             // Add celebration animation here
         }

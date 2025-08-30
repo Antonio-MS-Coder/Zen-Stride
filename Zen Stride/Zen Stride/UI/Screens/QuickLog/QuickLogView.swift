@@ -2,6 +2,7 @@ import SwiftUI
 
 struct QuickLogView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var dataStore: ZenStrideDataStore
     let onComplete: (MicroWin) -> Void
     
     @State private var selectedHabit: QuickHabit?
@@ -12,21 +13,51 @@ struct QuickLogView: View {
     @State private var showCelebration = false
     @State private var currentCelebration: CelebrationData?
     
-    // Predefined common micro-wins
-    let quickHabits = [
-        QuickHabit(name: "Reading", icon: "book.fill", color: .premiumIndigo, 
-                   quickValues: ["5 pages", "10 pages", "15 pages", "1 chapter"], unit: "pages"),
-        QuickHabit(name: "Exercise", icon: "figure.run", color: .premiumTeal,
-                   quickValues: ["10 min", "15 min", "20 min", "30 min"], unit: "minutes"),
-        QuickHabit(name: "Water", icon: "drop.fill", color: .premiumBlue,
-                   quickValues: ["1 glass", "2 glasses", "3 glasses", "1 bottle"], unit: "glasses"),
-        QuickHabit(name: "Meditation", icon: "brain.head.profile", color: .premiumMint,
-                   quickValues: ["5 min", "10 min", "15 min", "20 min"], unit: "minutes"),
-        QuickHabit(name: "Writing", icon: "pencil", color: .premiumCoral,
-                   quickValues: ["100 words", "250 words", "500 words", "1 page"], unit: "words"),
-        QuickHabit(name: "Steps", icon: "figure.walk", color: .premiumAmber,
-                   quickValues: ["1000", "2500", "5000", "10000"], unit: "steps")
-    ]
+    // Convert user's habits to quick habits
+    private var quickHabits: [QuickHabit] {
+        // If user has habits, use those. Otherwise, show defaults
+        if !dataStore.habits.isEmpty {
+            return dataStore.habits.map { habit in
+                QuickHabit(
+                    name: habit.name,
+                    icon: habit.icon,
+                    color: habit.color,
+                    quickValues: generateQuickValues(for: habit),
+                    unit: habit.unit ?? "times"
+                )
+            }
+        } else {
+            // Default habits for new users
+            return [
+                QuickHabit(name: "Reading", icon: "book.fill", color: .premiumIndigo, 
+                          quickValues: ["5 pages", "10 pages", "15 pages", "1 chapter"], unit: "pages"),
+                QuickHabit(name: "Exercise", icon: "figure.run", color: .premiumTeal,
+                          quickValues: ["10 min", "15 min", "20 min", "30 min"], unit: "minutes"),
+                QuickHabit(name: "Water", icon: "drop.fill", color: .premiumBlue,
+                          quickValues: ["1 glass", "2 glasses", "3 glasses", "1 bottle"], unit: "glasses"),
+                QuickHabit(name: "Steps", icon: "figure.walk", color: .premiumAmber,
+                          quickValues: ["1000", "2500", "5000", "10000"], unit: "steps")
+            ]
+        }
+    }
+    
+    private func generateQuickValues(for habit: HabitModel) -> [String] {
+        // Generate sensible quick values based on habit type
+        switch habit.unit?.lowercased() {
+        case "minutes", "min":
+            return ["5", "10", "15", "30"]
+        case "hours", "hr":
+            return ["0.5", "1", "1.5", "2"]
+        case "pages":
+            return ["5", "10", "15", "20"]
+        case "glasses", "cups":
+            return ["1", "2", "3", "4"]
+        case "steps":
+            return ["1000", "2500", "5000", "10000"]
+        default:
+            return ["1", "2", "3", "5"]
+        }
+    }
     
     var body: some View {
         NavigationView {

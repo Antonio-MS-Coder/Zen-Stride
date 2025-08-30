@@ -5,8 +5,6 @@ struct SimpleTabView: View {
     @State private var selectedTab = 0
     @State private var showingQuickLog = false
     @State private var showingProfile = false
-    @State private var habits: [HabitModel] = []
-    @State private var wins: [MicroWin] = []
     @StateObject private var dataStore = ZenStrideDataStore()
     
     var body: some View {
@@ -14,7 +12,7 @@ struct SimpleTabView: View {
             // Main content with two tabs
             TabView(selection: $selectedTab) {
                 // Log Wins - Main interaction point
-                LogWinsView(habits: $habits, wins: $wins, showingQuickLog: $showingQuickLog)
+                LogWinsView(showingQuickLog: $showingQuickLog)
                     .tag(0)
                     .tabItem {
                         Label("Log", systemImage: "plus.circle.fill")
@@ -22,7 +20,7 @@ struct SimpleTabView: View {
                     .environmentObject(dataStore)
                 
                 // Progress - Visual tracking
-                ProgressOverviewView(habits: $habits, wins: $wins)
+                ProgressOverviewView()
                     .tag(1)
                     .tabItem {
                         Label("Progress", systemImage: "chart.line.uptrend.xyaxis")
@@ -57,12 +55,12 @@ struct SimpleTabView: View {
         }
         .sheet(isPresented: $showingQuickLog) {
             QuickLogView { win in
-                wins.append(win)
                 dataStore.addWin(win)
             }
+            .environmentObject(dataStore)
         }
         .sheet(isPresented: $showingProfile) {
-            ProfileManagementView(habits: $habits)
+            ProfileManagementView()
                 .environmentObject(dataStore)
         }
     }
@@ -80,13 +78,23 @@ struct HabitModel: Identifiable {
 
 // MARK: - MicroWin Model
 struct MicroWin: Identifiable, Equatable {
-    let id = UUID()
+    let id: UUID
     let habitName: String
     let value: String
     let unit: String
     let icon: String
     let color: Color
     let timestamp: Date
+    
+    init(id: UUID = UUID(), habitName: String, value: String, unit: String, icon: String, color: Color, timestamp: Date) {
+        self.id = id
+        self.habitName = habitName
+        self.value = value
+        self.unit = unit
+        self.icon = icon
+        self.color = color
+        self.timestamp = timestamp
+    }
     
     static func == (lhs: MicroWin, rhs: MicroWin) -> Bool {
         lhs.id == rhs.id

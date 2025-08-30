@@ -1,8 +1,7 @@
 import SwiftUI
 
 struct ProgressOverviewView: View {
-    @Binding var habits: [HabitModel]
-    @Binding var wins: [MicroWin]
+    @EnvironmentObject var dataStore: ZenStrideDataStore
     @State private var selectedHabit: HabitModel?
     
     var body: some View {
@@ -11,7 +10,7 @@ struct ProgressOverviewView: View {
                 Color.premiumGray6
                     .ignoresSafeArea()
                 
-                if habits.isEmpty {
+                if dataStore.habits.isEmpty {
                     emptyStateView
                 } else {
                     ScrollView {
@@ -33,7 +32,7 @@ struct ProgressOverviewView: View {
             }
             .navigationBarHidden(true)
             .sheet(item: $selectedHabit) { habit in
-                HabitDetailView(habit: habit, wins: wins)
+                HabitDetailView(habit: habit, wins: dataStore.wins)
             }
         }
     }
@@ -78,7 +77,7 @@ struct ProgressOverviewView: View {
     // MARK: - Habit Progress
     private var habitProgressSection: some View {
         VStack(spacing: 16) {
-            ForEach(habits) { habit in
+            ForEach(dataStore.habits) { habit in
                 HabitProgressCard(
                     habit: habit,
                     wins: winsForHabit(habit),
@@ -114,7 +113,7 @@ struct ProgressOverviewView: View {
     private var totalWinsToday: Int {
         let calendar = Calendar.current
         let today = Date()
-        return wins.filter { calendar.isDate($0.timestamp, inSameDayAs: today) }.count
+        return dataStore.wins.filter { calendar.isDate($0.timestamp, inSameDayAs: today) }.count
     }
     
     private var currentStreak: Int {
@@ -122,18 +121,18 @@ struct ProgressOverviewView: View {
     }
     
     private var totalWins: Int {
-        wins.count
+        dataStore.wins.count
     }
     
     private func winsForHabit(_ habit: HabitModel) -> [MicroWin] {
-        wins.filter { $0.habitName == habit.name }
+        dataStore.wins.filter { $0.habitName == habit.name }
     }
     
     private func calculateStreak() -> Int {
-        guard !wins.isEmpty else { return 0 }
+        guard !dataStore.wins.isEmpty else { return 0 }
         
         let calendar = Calendar.current
-        let sortedDates = wins.map { calendar.startOfDay(for: $0.timestamp) }
+        let sortedDates = dataStore.wins.map { calendar.startOfDay(for: $0.timestamp) }
             .sorted(by: >)
         
         guard let mostRecent = sortedDates.first,
