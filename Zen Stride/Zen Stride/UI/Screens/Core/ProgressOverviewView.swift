@@ -1,9 +1,9 @@
 import SwiftUI
 
 struct ProgressOverviewView: View {
-    @Binding var habits: [Habit]
+    @Binding var habits: [HabitModel]
     @Binding var wins: [MicroWin]
-    @State private var selectedHabit: Habit?
+    @State private var selectedHabit: HabitModel?
     
     var body: some View {
         NavigationView {
@@ -125,7 +125,7 @@ struct ProgressOverviewView: View {
         wins.count
     }
     
-    private func winsForHabit(_ habit: Habit) -> [MicroWin] {
+    private func winsForHabit(_ habit: HabitModel) -> [MicroWin] {
         wins.filter { $0.habitName == habit.name }
     }
     
@@ -181,7 +181,7 @@ struct StatCard: View {
 
 // MARK: - Habit Progress Card
 struct HabitProgressCard: View {
-    let habit: Habit
+    let habit: HabitModel
     let wins: [MicroWin]
     let onTap: () -> Void
     
@@ -260,7 +260,7 @@ struct HabitProgressCard: View {
 
 // MARK: - Habit Detail View
 struct HabitDetailView: View {
-    let habit: Habit
+    let habit: HabitModel
     let wins: [MicroWin]
     @Environment(\.dismiss) private var dismiss
     

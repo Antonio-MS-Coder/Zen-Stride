@@ -32,6 +32,22 @@ extension Color {
     static let notionText = notionBlack
     static let notionTextSecondary = notionGray600
     static let notionTextTertiary = notionGray400
+    
+    // Premium Colors (for backwards compatibility)
+    static let premiumIndigo = Color(red: 0.33, green: 0.40, blue: 0.96)
+    static let premiumTeal = Color(red: 0.20, green: 0.78, blue: 0.75)
+    static let premiumBlue = Color(red: 0.00, green: 0.48, blue: 1.00)
+    static let premiumMint = Color(red: 0.00, green: 0.78, blue: 0.66)
+    static let premiumCoral = Color(red: 1.00, green: 0.42, blue: 0.42)
+    static let premiumAmber = Color(red: 1.00, green: 0.80, blue: 0.00)
+    
+    // Premium Grays
+    static let premiumGray1 = Color(red: 0.11, green: 0.11, blue: 0.12)
+    static let premiumGray2 = Color(red: 0.25, green: 0.25, blue: 0.26)
+    static let premiumGray3 = Color(red: 0.45, green: 0.45, blue: 0.46)
+    static let premiumGray4 = Color(red: 0.65, green: 0.65, blue: 0.67)
+    static let premiumGray5 = Color(red: 0.85, green: 0.85, blue: 0.87)
+    static let premiumGray6 = Color(red: 0.95, green: 0.95, blue: 0.97)
 }
 
 // MARK: - Typography System
@@ -45,6 +61,9 @@ extension Font {
     static let notionCallout = Font.system(size: 14, weight: .regular, design: .default)
     static let notionCaption = Font.system(size: 13, weight: .regular, design: .default)
     static let notionFootnote = Font.system(size: 12, weight: .regular, design: .default)
+    
+    // Premium fonts for compatibility
+    static let premiumTitle2 = Font.system(size: 22, weight: .bold, design: .rounded)
 }
 
 // MARK: - Spacing System (8pt Grid)
@@ -58,6 +77,15 @@ extension CGFloat {
     static let notion32: CGFloat = 32
     static let notion48: CGFloat = 48
     static let notion64: CGFloat = 64
+    
+    // Legacy spacing for compatibility
+    static let spacing4: CGFloat = 4
+    static let spacing8: CGFloat = 8
+    static let spacing12: CGFloat = 12
+    static let spacing16: CGFloat = 16
+    static let spacing20: CGFloat = 20
+    static let spacing24: CGFloat = 24
+    static let spacing32: CGFloat = 32
 }
 
 // MARK: - Corner Radius
@@ -67,6 +95,9 @@ extension CGFloat {
     static let notionCornerLarge: CGFloat = 8
     static let notionCornerXL: CGFloat = 12
     static let notionCornerFull: CGFloat = 999
+    
+    // Legacy radius for compatibility
+    static let radiusXL: CGFloat = 16
 }
 
 // MARK: - Animation Durations (Minimal)

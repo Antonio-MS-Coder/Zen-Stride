@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct LogWinsView: View {
-    @Binding var habits: [Habit]
+    @Binding var habits: [HabitModel]
     @Binding var wins: [MicroWin]
     @Binding var showingQuickLog: Bool
     @State private var todaysWins: [MicroWin] = []
@@ -199,7 +199,7 @@ struct LogWinsView: View {
         }
     }
     
-    private func logQuickWin(for habit: Habit) {
+    private func logQuickWin(for habit: HabitModel) {
         let win = MicroWin(
             habitName: habit.name,
             value: "1",
@@ -219,7 +219,7 @@ struct LogWinsView: View {
 
 // MARK: - Quick Action Card
 struct QuickActionCard: View {
-    let habit: Habit
+    let habit: HabitModel
     let action: () -> Void
     @State private var isPressed = false
     
@@ -318,7 +318,7 @@ struct WinCard: View {
 }
 
 // MARK: - Habit Model Extension
-extension Habit {
+extension HabitModel {
     var color: Color {
         switch icon {
         case "book.fill": return .premiumIndigo

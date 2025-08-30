@@ -5,7 +5,7 @@ struct SimpleTabView: View {
     @State private var selectedTab = 0
     @State private var showingQuickLog = false
     @State private var showingProfile = false
-    @State private var habits: [Habit] = []
+    @State private var habits: [HabitModel] = []
     @State private var wins: [MicroWin] = []
     @StateObject private var dataStore = ZenStrideDataStore()
     
@@ -69,7 +69,7 @@ struct SimpleTabView: View {
 }
 
 // MARK: - Habit Model
-struct Habit: Identifiable {
+struct HabitModel: Identifiable {
     let id = UUID()
     let name: String
     let icon: String

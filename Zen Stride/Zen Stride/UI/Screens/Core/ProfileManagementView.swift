@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct ProfileManagementView: View {
-    @Binding var habits: [Habit]
+    @Binding var habits: [HabitModel]
     @Environment(\.dismiss) private var dismiss
     @State private var showingAddHabit = false
-    @State private var editingHabit: Habit?
+    @State private var editingHabit: HabitModel?
     @State private var userName = "Friend"
     @State private var showingSettings = false
     
@@ -203,7 +203,7 @@ struct ProfileManagementView: View {
     }
     
     // MARK: - Helpers
-    private func deleteHabit(_ habit: Habit) {
+    private func deleteHabit(_ habit: HabitModel) {
         withAnimation {
             habits.removeAll { $0.id == habit.id }
         }
@@ -212,7 +212,7 @@ struct ProfileManagementView: View {
 
 // MARK: - Habit Management Card
 struct HabitManagementCard: View {
-    let habit: Habit
+    let habit: HabitModel
     let onEdit: () -> Void
     let onDelete: () -> Void
     @State private var showingDeleteAlert = false
@@ -312,7 +312,7 @@ struct SettingsRow: View {
 
 // MARK: - Add Habit View
 struct AddHabitView: View {
-    @Binding var habits: [Habit]
+    @Binding var habits: [HabitModel]
     @Environment(\.dismiss) private var dismiss
     @State private var habitName = ""
     @State private var selectedIcon = "star.fill"
@@ -438,7 +438,7 @@ struct AddHabitView: View {
     }
     
     private func saveHabit() {
-        let newHabit = Habit(
+        let newHabit = HabitModel(
             name: habitName,
             icon: selectedIcon,
             frequency: selectedFrequency,
@@ -452,14 +452,14 @@ struct AddHabitView: View {
 
 // MARK: - Edit Habit View
 struct EditHabitView: View {
-    let habit: Habit
-    @Binding var habits: [Habit]
+    let habit: HabitModel
+    @Binding var habits: [HabitModel]
     @Environment(\.dismiss) private var dismiss
     @State private var habitName: String
     @State private var selectedIcon: String
     @State private var selectedFrequency: String
     
-    init(habit: Habit, habits: Binding<[Habit]>) {
+    init(habit: HabitModel, habits: Binding<[HabitModel]>) {
         self.habit = habit
         self._habits = habits
         self._habitName = State(initialValue: habit.name)
