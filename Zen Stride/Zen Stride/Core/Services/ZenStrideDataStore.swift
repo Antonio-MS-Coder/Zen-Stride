@@ -20,6 +20,14 @@ class ZenStrideDataStore: ObservableObject {
         wins
     }
     
+    // Computed property for today's wins
+    var todaysWins: [MicroWin] {
+        getTodaysWins()
+    }
+    
+    // Streak saver tokens (for gamification)
+    @Published var streakSaverTokens: Int = 3
+    
     init() {
         // Initialize with empty data for fresh start
         calculateStreak()
@@ -84,6 +92,30 @@ class ZenStrideDataStore: ObservableObject {
         
         let trend = Double(recentWins.count - previousWins.count) / Double(previousWins.count)
         return max(-1.0, min(1.0, trend)) // Clamp between -1 and 1
+    }
+    
+    func getWeeklyProgress() -> [Double] {
+        let calendar = Calendar.current
+        let now = Date()
+        var weeklyData: [Double] = []
+        
+        // Get data for last 7 days
+        for dayOffset in (0..<7).reversed() {
+            guard let targetDate = calendar.date(byAdding: .day, value: -dayOffset, to: now) else {
+                weeklyData.append(0)
+                continue
+            }
+            
+            let dayWins = wins.filter { win in
+                calendar.isDate(win.timestamp, inSameDayAs: targetDate)
+            }
+            
+            // Normalize to 0-1 scale (assuming max 10 wins per day)
+            let normalizedValue = min(Double(dayWins.count) / 10.0, 1.0)
+            weeklyData.append(normalizedValue)
+        }
+        
+        return weeklyData
     }
     
     private func calculateStreak() {

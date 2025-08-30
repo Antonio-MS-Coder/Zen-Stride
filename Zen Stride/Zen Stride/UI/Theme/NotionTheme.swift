@@ -63,6 +63,7 @@ extension Font {
     static let notionFootnote = Font.system(size: 12, weight: .regular, design: .default)
     
     // Premium fonts for compatibility
+    static let premiumLargeTitle = Font.system(size: 34, weight: .bold, design: .rounded)
     static let premiumTitle1 = Font.system(size: 28, weight: .bold, design: .rounded)
     static let premiumTitle2 = Font.system(size: 22, weight: .bold, design: .rounded)
     static let premiumTitle3 = Font.system(size: 20, weight: .semibold, design: .rounded)

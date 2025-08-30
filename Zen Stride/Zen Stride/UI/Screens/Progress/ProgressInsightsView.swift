@@ -128,14 +128,22 @@ struct ProgressInsightsView: View {
     
     // MARK: - Chart View
     private var chartView: some View {
-        let weekData = dataStore.getWeeklyProgress()
+        let weekProgress = dataStore.getWeeklyProgress()
+        let calendar = Calendar.current
+        let today = Date()
+        let weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        
+        // Create chart data structure
+        let chartData = weekProgress.enumerated().map { index, value in
+            (day: weekDays[index], value: value)
+        }
         
         return VStack(alignment: .leading, spacing: .spacing12) {
             // Simple bar chart - cleaner and more readable
-            Chart(weekData) { day in
+            Chart(chartData, id: \.day) { data in
                 BarMark(
-                    x: .value("Day", dayLabel(for: day.date)),
-                    y: .value("Wins", day.wins)
+                    x: .value("Day", data.day),
+                    y: .value("Progress", data.value)
                 )
                 .foregroundStyle(
                     LinearGradient(
@@ -147,7 +155,7 @@ struct ProgressInsightsView: View {
                 .cornerRadius(4)
             }
             .frame(height: 200)
-            .chartYScale(domain: 0...10)
+            .chartYScale(domain: 0...1)
             .chartXAxis {
                 AxisMarks(values: .automatic) { _ in
                     AxisValueLabel()
