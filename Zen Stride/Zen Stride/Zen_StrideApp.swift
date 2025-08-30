@@ -19,7 +19,7 @@ struct Zen_StrideApp: App {
     var body: some Scene {
         WindowGroup {
             if hasCompletedOnboarding {
-                ZenStrideTabView()
+                SimpleTabView() // Use the new simplified interface
                     .environment(\.managedObjectContext, persistenceController.container.viewContext)
                     .preferredColorScheme(.light) // Premium design optimized for light mode
             } else {
