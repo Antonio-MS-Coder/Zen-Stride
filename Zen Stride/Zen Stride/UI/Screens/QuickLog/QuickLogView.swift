@@ -13,6 +13,27 @@ struct QuickLogView: View {
     @State private var showCelebration = false
     @State private var currentCelebration: CelebrationData?
     
+    // Get habits sorted by most frequently used
+    private var mostUsedHabits: [HabitModel] {
+        dataStore.habits.sorted { habit1, habit2 in
+            let habit1Count = dataStore.wins.filter { $0.habitName == habit1.name }.count
+            let habit2Count = dataStore.wins.filter { $0.habitName == habit2.name }.count
+            
+            // If counts are equal, sort by most recent use
+            if habit1Count == habit2Count {
+                let habit1Recent = dataStore.wins
+                    .filter { $0.habitName == habit1.name }
+                    .max { $0.timestamp < $1.timestamp }?.timestamp ?? Date.distantPast
+                let habit2Recent = dataStore.wins
+                    .filter { $0.habitName == habit2.name }
+                    .max { $0.timestamp < $1.timestamp }?.timestamp ?? Date.distantPast
+                return habit1Recent > habit2Recent
+            }
+            
+            return habit1Count > habit2Count
+        }
+    }
+    
     // Convert user's habits to quick habits
     private var quickHabits: [QuickHabit] {
         // If user has habits, use those. Otherwise, show defaults
@@ -135,66 +156,70 @@ struct QuickLogView: View {
     // MARK: - Quick Wins Grid (One-tap)
     private var quickWinsGrid: some View {
         VStack(spacing: .spacing16) {
-            LazyVGrid(columns: [
-                GridItem(.flexible()),
-                GridItem(.flexible())
-            ], spacing: .spacing16) {
-                // Most common quick wins for one-tap logging
+            quickWinsGridContent
+            moreOptionsButton
+        }
+    }
+    
+    @ViewBuilder
+    private var quickWinsGridContent: some View {
+        LazyVGrid(columns: [
+            GridItem(.flexible()),
+            GridItem(.flexible())
+        ], spacing: .spacing16) {
+            // Show user's habits sorted by most frequently used (up to 10)
+            ForEach(Array(mostUsedHabits.prefix(10))) { habit in
                 QuickWinButton(
-                    title: "10 pages",
-                    icon: "book.fill",
-                    color: .premiumIndigo,
+                    habit: habit,
                     onTap: {
-                        logQuickWin("Reading", "10", "pages", "book.fill", .premiumIndigo)
-                    }
-                )
-                
-                QuickWinButton(
-                    title: "15 min exercise",
-                    icon: "figure.run",
-                    color: .premiumTeal,
-                    onTap: {
-                        logQuickWin("Exercise", "15", "min", "figure.run", .premiumTeal)
-                    }
-                )
-                
-                QuickWinButton(
-                    title: "2 glasses water",
-                    icon: "drop.fill",
-                    color: .premiumBlue,
-                    onTap: {
-                        logQuickWin("Water", "2", "glasses", "drop.fill", .premiumBlue)
-                    }
-                )
-                
-                QuickWinButton(
-                    title: "10 min meditation",
-                    icon: "brain.head.profile",
-                    color: .premiumMint,
-                    onTap: {
-                        logQuickWin("Meditation", "10", "min", "brain.head.profile", .premiumMint)
-                    }
-                )
-                
-                QuickWinButton(
-                    title: "500 words",
-                    icon: "pencil",
-                    color: .premiumCoral,
-                    onTap: {
-                        logQuickWin("Writing", "500", "words", "pencil", .premiumCoral)
-                    }
-                )
-                
-                QuickWinButton(
-                    title: "5000 steps",
-                    icon: "figure.walk",
-                    color: .premiumAmber,
-                    onTap: {
-                        logQuickWin("Steps", "5000", "steps", "figure.walk", .premiumAmber)
+                        handleQuickWinTap(for: habit)
                     }
                 )
             }
             
+            // If user has fewer than 10 habits, show defaults to fill the grid
+            if mostUsedHabits.count < 10 {
+                defaultHabitButtons
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var defaultHabitButtons: some View {
+        let defaultHabits = [
+            ("Water", "2", "glasses", "drop.fill", Color.premiumBlue),
+            ("Exercise", "15", "min", "figure.run", Color.premiumTeal),
+            ("Reading", "10", "pages", "book.fill", Color.premiumIndigo),
+            ("Meditation", "10", "min", "brain.head.profile", Color.premiumMint),
+            ("Writing", "500", "words", "pencil", Color.premiumCoral),
+            ("Steps", "5000", "steps", "figure.walk", Color.premiumAmber),
+            ("Sleep", "8", "hours", "bed.double.fill", Color.purple),
+            ("Vitamins", "1", "dose", "pills.fill", Color.green),
+            ("Stretch", "10", "min", "figure.flexibility", Color.orange),
+            ("Journal", "1", "page", "book.closed.fill", Color.premiumGray2)
+        ]
+        
+        let habitCount = mostUsedHabits.count
+        let neededCount = min(10 - habitCount, defaultHabits.count)
+        
+        ForEach(0..<neededCount, id: \.self) { index in
+            let habit = defaultHabits[index]
+            if !dataStore.habits.contains(where: { $0.name == habit.0 }) {
+                QuickWinButton(
+                    title: "\(habit.1) \(habit.2) \(habit.0.lowercased())",
+                    icon: habit.3,
+                    color: habit.4,
+                    onTap: {
+                        logQuickWin(habit.0, habit.1, habit.2, habit.3, habit.4)
+                    }
+                )
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var moreOptionsButton: some View {
+        if mostUsedHabits.count > 10 {
             Button {
                 withAnimation(.premiumSpring) {
                     quickLogMode = false
@@ -216,6 +241,17 @@ struct QuickLogView: View {
                 )
             }
         }
+    }
+    
+    private func handleQuickWinTap(for habit: HabitModel) {
+        let quickValue = String(Int(habit.quickIncrementValue))
+        logQuickWin(
+            habit.name,
+            quickValue,
+            habit.unit ?? "",
+            habit.icon,
+            habit.color
+        )
     }
     
     // MARK: - Habit Grid
@@ -294,6 +330,43 @@ struct QuickLogView: View {
     
     // MARK: - Quick Win Helper with Celebration
     private func logQuickWin(_ name: String, _ value: String, _ unit: String, _ icon: String, _ color: Color) {
+        // Check if habit exists, if not create it with smart defaults
+        if !dataStore.habits.contains(where: { $0.name == name }) {
+            let trackingType: TrackingType
+            let targetValue: Double?
+            
+            // Smart defaults based on habit name
+            switch name.lowercased() {
+            case "water":
+                trackingType = .count
+                targetValue = 8
+            case "exercise", "steps":
+                trackingType = .count
+                targetValue = name.lowercased() == "steps" ? 10000 : 30
+            case "reading", "writing":
+                trackingType = .count
+                targetValue = name.lowercased() == "reading" ? 20 : 500
+            case "meditation":
+                trackingType = .check
+                targetValue = nil
+            default:
+                trackingType = .check
+                targetValue = nil
+            }
+            
+            let newHabit = HabitModel(
+                name: name,
+                icon: icon,
+                frequency: "Daily",
+                unit: unit,
+                isActive: true,
+                trackingType: trackingType,
+                targetValue: targetValue,
+                targetPeriod: .daily
+            )
+            dataStore.addHabit(newHabit)
+        }
+        
         // Get contextual celebration
         let celebration = ContextualCelebration.getCelebration(for: name, value: value)
         currentCelebration = celebration
@@ -375,9 +448,24 @@ struct QuickHabitButton: View {
                         .fill(isSelected ? habit.color : habit.color.opacity(0.15))
                         .frame(width: 56, height: 56)
                     
-                    Image(systemName: habit.icon)
-                        .font(.system(size: 24))
-                        .foregroundColor(isSelected ? .white : habit.color)
+                    if habit.icon.hasPrefix("mascot:") {
+                        // For mascot icons when selected, show on white background
+                        if isSelected {
+                            Circle()
+                                .fill(Color.white)
+                                .frame(width: 50, height: 50)
+                        }
+                        HabitIconView(
+                            icon: habit.icon,
+                            size: 24,
+                            color: habit.color,
+                            isComplete: !isSelected
+                        )
+                    } else {
+                        Image(systemName: habit.icon)
+                            .font(.system(size: 24))
+                            .foregroundColor(isSelected ? .white : habit.color)
+                    }
                 }
                 
                 Text(habit.name)
@@ -416,11 +504,29 @@ struct QuickValueButton: View {
 // MARK: - Custom Value Input
 // MARK: - Quick Win Button (One-tap)
 struct QuickWinButton: View {
-    let title: String
-    let icon: String
-    let color: Color
+    var habit: HabitModel? = nil
+    var title: String? = nil
+    var icon: String? = nil
+    var color: Color? = nil
     let onTap: () -> Void
     @State private var isPressed = false
+    
+    private var displayTitle: String {
+        if let habit = habit {
+            let value = Int(habit.quickIncrementValue)
+            let unit = habit.unit ?? ""
+            return "\(value) \(unit) \(habit.name.lowercased())"
+        }
+        return title ?? ""
+    }
+    
+    private var displayIcon: String {
+        habit?.icon ?? icon ?? "star.fill"
+    }
+    
+    private var displayColor: Color {
+        habit?.color ?? color ?? .premiumIndigo
+    }
     
     var body: some View {
         Button(action: {
@@ -438,15 +544,18 @@ struct QuickWinButton: View {
             VStack(spacing: .spacing12) {
                 ZStack {
                     RoundedRectangle(cornerRadius: .radiusL)
-                        .fill(color.opacity(0.1))
+                        .fill(displayColor.opacity(0.1))
                     
-                    Image(systemName: icon)
-                        .font(.system(size: 28))
-                        .foregroundColor(color)
+                    HabitIconView(
+                        icon: displayIcon,
+                        size: 28,
+                        color: displayColor,
+                        isComplete: false
+                    )
                 }
                 .frame(height: 80)
                 
-                Text(title)
+                Text(displayTitle)
                     .font(.premiumCallout)
                     .foregroundColor(.premiumGray1)
                     .multilineTextAlignment(.center)
@@ -480,9 +589,12 @@ struct CustomValueInput: View {
                                 .fill(habit.color.opacity(0.15))
                                 .frame(width: 80, height: 80)
                             
-                            Image(systemName: habit.icon)
-                                .font(.system(size: 36))
-                                .foregroundColor(habit.color)
+                            HabitIconView(
+                                icon: habit.icon,
+                                size: 36,
+                                color: habit.color,
+                                isComplete: false
+                            )
                         }
                         
                         Text(habit.name)

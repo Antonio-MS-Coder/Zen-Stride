@@ -129,8 +129,6 @@ struct ProgressInsightsView: View {
     // MARK: - Chart View
     private var chartView: some View {
         let weekProgress = dataStore.getWeeklyProgress()
-        let calendar = Calendar.current
-        let today = Date()
         let weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
         
         // Create chart data structure

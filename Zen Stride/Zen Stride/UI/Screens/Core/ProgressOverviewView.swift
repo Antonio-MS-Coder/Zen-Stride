@@ -184,11 +184,46 @@ struct HabitProgressCard: View {
     let wins: [MicroWin]
     let onTap: () -> Void
     
-    private var weeklyProgress: Double {
+    private var progressInfo: (value: Double, label: String, progress: Double) {
         let calendar = Calendar.current
-        let weekAgo = calendar.date(byAdding: .day, value: -7, to: Date())!
-        let recentWins = wins.filter { $0.timestamp > weekAgo }
-        return min(Double(recentWins.count) / 7.0, 1.0)
+        let today = Date()
+        
+        switch habit.trackingType {
+        case .check:
+            // For CHECK: Show completion rate for the week
+            let weekAgo = calendar.date(byAdding: .day, value: -7, to: Date())!
+            let recentWins = wins.filter { $0.timestamp > weekAgo }
+            let daysWithWins = Set(recentWins.map { calendar.startOfDay(for: $0.timestamp) }).count
+            let progress = Double(daysWithWins) / 7.0
+            return (Double(daysWithWins), "\(daysWithWins)/7 days", progress)
+            
+        case .count:
+            // For COUNT: Show progress toward target
+            if habit.targetPeriod == .daily {
+                // Daily target - show today's progress
+                let todayWins = wins.filter { calendar.isDate($0.timestamp, inSameDayAs: today) }
+                let sum = todayWins.reduce(0) { $0 + (Double($1.value) ?? 0) }
+                let target = habit.targetValue ?? 1
+                let progress = sum / target
+                return (sum, "\(Int(sum))/\(Int(target)) today", min(progress, 1.0))
+            } else {
+                // Weekly target - show week's progress
+                let weekAgo = calendar.date(byAdding: .day, value: -7, to: Date())!
+                let weekWins = wins.filter { $0.timestamp > weekAgo }
+                let sum = weekWins.reduce(0) { $0 + (Double($1.value) ?? 0) }
+                let target = habit.targetValue ?? 1
+                let progress = sum / target
+                return (sum, "\(Int(sum))/\(Int(target)) this week", min(progress, 1.0))
+            }
+            
+        case .goal:
+            // For GOAL: Show total progress toward final goal
+            let total = wins.reduce(0) { $0 + (Double($1.value) ?? 0) }
+            let target = habit.targetValue ?? 100
+            let progress = total / target
+            let percentage = Int(progress * 100)
+            return (total, "\(percentage)% of goal", min(progress, 1.0))
+        }
     }
     
     var body: some View {
@@ -197,17 +232,25 @@ struct HabitProgressCard: View {
                 HStack {
                     // Icon and name
                     HStack(spacing: 12) {
-                        Image(systemName: habit.icon)
-                            .font(.system(size: 24))
-                            .foregroundColor(habit.color)
-                            .frame(width: 40, height: 40)
+                        ZStack {
+                            Circle()
+                                .fill(habit.color.opacity(0.1))
+                                .frame(width: 40, height: 40)
+                            
+                            HabitIconView(
+                                icon: habit.icon,
+                                size: 24,
+                                color: habit.color,
+                                isComplete: false
+                            )
+                        }
                         
                         VStack(alignment: .leading, spacing: 4) {
                             Text(habit.name)
                                 .font(.system(size: 18, weight: .semibold))
                                 .foregroundColor(.premiumGray1)
                             
-                            Text("\(wins.count) total wins")
+                            Text(progressInfo.label)
                                 .font(.system(size: 14))
                                 .foregroundColor(.premiumGray3)
                         }
@@ -220,9 +263,10 @@ struct HabitProgressCard: View {
                         .foregroundColor(.premiumGray4)
                 }
                 
-                // Weekly progress bar
+                // Progress bar
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("This week")
+                    Text(habit.trackingType == .goal ? "Overall Progress" : 
+                         habit.targetPeriod == .weekly ? "Weekly Progress" : "Today's Progress")
                         .font(.system(size: 12))
                         .foregroundColor(.premiumGray3)
                     
@@ -239,8 +283,8 @@ struct HabitProgressCard: View {
                                         endPoint: .trailing
                                     )
                                 )
-                                .frame(width: geometry.size.width * weeklyProgress)
-                                .animation(.spring(), value: weeklyProgress)
+                                .frame(width: geometry.size.width * progressInfo.progress)
+                                .animation(.spring(), value: progressInfo.progress)
                         }
                     }
                     .frame(height: 8)
@@ -305,13 +349,15 @@ struct HabitDetailView: View {
     
     // MARK: - Progress Circle
     private var progressCircleSection: some View {
-        ZStack {
+        let progress = calculateProgress()
+        
+        return ZStack {
             Circle()
                 .stroke(Color.premiumGray5, lineWidth: 20)
                 .frame(width: 200, height: 200)
             
             Circle()
-                .trim(from: 0, to: weeklyCompletion)
+                .trim(from: 0, to: progress.value)
                 .stroke(
                     LinearGradient(
                         colors: [habit.color.opacity(0.6), habit.color],
@@ -322,17 +368,71 @@ struct HabitDetailView: View {
                 )
                 .frame(width: 200, height: 200)
                 .rotationEffect(.degrees(-90))
-                .animation(.spring(), value: weeklyCompletion)
+                .animation(.spring(), value: progress.value)
             
             VStack(spacing: 8) {
-                Text("\(Int(weeklyCompletion * 100))%")
-                    .font(.system(size: 48, weight: .bold, design: .rounded))
-                    .foregroundColor(.premiumGray1)
-                
-                Text("This week")
-                    .font(.system(size: 16))
-                    .foregroundColor(.premiumGray3)
+                if habit.trackingType == .goal {
+                    Text("\(Int(progress.value * 100))%")
+                        .font(.system(size: 48, weight: .bold, design: .rounded))
+                        .foregroundColor(.premiumGray1)
+                    
+                    Text("\(Int(progress.current)) / \(Int(habit.targetValue ?? 0)) \(habit.unit ?? "")")
+                        .font(.system(size: 16))
+                        .foregroundColor(.premiumGray3)
+                } else if habit.trackingType == .count {
+                    Text("\(Int(progress.current))")
+                        .font(.system(size: 48, weight: .bold, design: .rounded))
+                        .foregroundColor(.premiumGray1)
+                    
+                    Text("of \(Int(habit.targetValue ?? 0)) \(progress.label)")
+                        .font(.system(size: 16))
+                        .foregroundColor(.premiumGray3)
+                } else {
+                    Text("\(Int(progress.value * 100))%")
+                        .font(.system(size: 48, weight: .bold, design: .rounded))
+                        .foregroundColor(.premiumGray1)
+                    
+                    Text(progress.label)
+                        .font(.system(size: 16))
+                        .foregroundColor(.premiumGray3)
+                }
             }
+        }
+    }
+    
+    private func calculateProgress() -> (value: Double, current: Double, label: String) {
+        let calendar = Calendar.current
+        
+        switch habit.trackingType {
+        case .check:
+            // Weekly completion rate
+            let weekAgo = calendar.date(byAdding: .day, value: -7, to: Date())!
+            let recentWins = habitWins.filter { $0.timestamp > weekAgo }
+            let daysWithWins = Set(recentWins.map { calendar.startOfDay(for: $0.timestamp) }).count
+            return (Double(daysWithWins) / 7.0, Double(daysWithWins), "This week")
+            
+        case .count:
+            if habit.targetPeriod == .daily {
+                // Today's progress
+                let today = Date()
+                let todayWins = habitWins.filter { calendar.isDate($0.timestamp, inSameDayAs: today) }
+                let sum = todayWins.reduce(0) { $0 + (Double($1.value) ?? 0) }
+                let target = habit.targetValue ?? 1
+                return (sum / target, sum, "today")
+            } else {
+                // Weekly progress
+                let weekAgo = calendar.date(byAdding: .day, value: -7, to: Date())!
+                let weekWins = habitWins.filter { $0.timestamp > weekAgo }
+                let sum = weekWins.reduce(0) { $0 + (Double($1.value) ?? 0) }
+                let target = habit.targetValue ?? 1
+                return (sum / target, sum, "this week")
+            }
+            
+        case .goal:
+            // Total progress toward goal
+            let total = habitWins.reduce(0) { $0 + (Double($1.value) ?? 0) }
+            let target = habit.targetValue ?? 100
+            return (total / target, total, "total")
         }
     }
     
@@ -342,10 +442,22 @@ struct HabitDetailView: View {
             GridItem(.flexible()),
             GridItem(.flexible())
         ], spacing: 16) {
-            StatBox(label: "Total Wins", value: "\(habitWins.count)")
-            StatBox(label: "This Month", value: "\(monthlyWins)")
-            StatBox(label: "Best Streak", value: "\(bestStreak) days")
-            StatBox(label: "Average/Week", value: String(format: "%.1f", weeklyAverage))
+            if habit.trackingType == .check {
+                StatBox(label: "Total Days", value: "\(uniqueDays)")
+                StatBox(label: "This Month", value: "\(monthlyDays) days")
+                StatBox(label: "Best Streak", value: "\(bestStreak) days")
+                StatBox(label: "Completion Rate", value: "\(Int(completionRate * 100))%")
+            } else if habit.trackingType == .count {
+                StatBox(label: "Total \(habit.unit ?? "items")", value: "\(Int(totalValue))")
+                StatBox(label: "This Month", value: "\(Int(monthlyValue))")
+                StatBox(label: "Daily Average", value: String(format: "%.1f", dailyAverage))
+                StatBox(label: "Best Day", value: "\(Int(bestDay))")
+            } else { // goal
+                StatBox(label: "Progress", value: "\(Int((totalValue / (habit.targetValue ?? 100)) * 100))%")
+                StatBox(label: "Completed", value: "\(Int(totalValue)) \(habit.unit ?? "")")
+                StatBox(label: "Remaining", value: "\(Int((habit.targetValue ?? 100) - totalValue))")
+                StatBox(label: "Daily Rate", value: String(format: "%.1f", dailyAverage))
+            }
         }
     }
     
@@ -420,28 +532,72 @@ struct HabitDetailView: View {
     }
     
     // MARK: - Computed Properties
-    private var weeklyCompletion: Double {
-        let calendar = Calendar.current
-        let weekAgo = calendar.date(byAdding: .day, value: -7, to: Date())!
-        let recentWins = habitWins.filter { $0.timestamp > weekAgo }
-        return min(Double(recentWins.count) / 7.0, 1.0)
+    private var totalValue: Double {
+        habitWins.reduce(0) { $0 + (Double($1.value) ?? 0) }
     }
     
-    private var monthlyWins: Int {
+    private var monthlyValue: Double {
         let calendar = Calendar.current
         let monthAgo = calendar.date(byAdding: .month, value: -1, to: Date())!
-        return habitWins.filter { $0.timestamp > monthAgo }.count
+        return habitWins.filter { $0.timestamp > monthAgo }
+            .reduce(0) { $0 + (Double($1.value) ?? 0) }
+    }
+    
+    private var uniqueDays: Int {
+        let calendar = Calendar.current
+        return Set(habitWins.map { calendar.startOfDay(for: $0.timestamp) }).count
+    }
+    
+    private var monthlyDays: Int {
+        let calendar = Calendar.current
+        let monthAgo = calendar.date(byAdding: .month, value: -1, to: Date())!
+        let monthWins = habitWins.filter { $0.timestamp > monthAgo }
+        return Set(monthWins.map { calendar.startOfDay(for: $0.timestamp) }).count
+    }
+    
+    private var dailyAverage: Double {
+        guard uniqueDays > 0 else { return 0 }
+        return totalValue / Double(uniqueDays)
+    }
+    
+    private var bestDay: Double {
+        let calendar = Calendar.current
+        let groupedByDay = Dictionary(grouping: habitWins) { win in
+            calendar.startOfDay(for: win.timestamp)
+        }
+        return groupedByDay.values.map { wins in
+            wins.reduce(0) { $0 + (Double($1.value) ?? 0) }
+        }.max() ?? 0
+    }
+    
+    private var completionRate: Double {
+        let calendar = Calendar.current
+        guard let firstWin = habitWins.first else { return 0 }
+        let daysSinceFirst = calendar.dateComponents([.day], from: firstWin.timestamp, to: Date()).day ?? 1
+        return Double(uniqueDays) / Double(max(daysSinceFirst, 1))
     }
     
     private var bestStreak: Int {
-        // Simplified streak calculation
-        return 7 // You can implement more complex logic here
-    }
-    
-    private var weeklyAverage: Double {
-        guard !habitWins.isEmpty else { return 0 }
-        let weeks = Double(habitWins.count) / 7.0
-        return Double(habitWins.count) / max(weeks, 1)
+        let calendar = Calendar.current
+        let sortedDates = habitWins.map { calendar.startOfDay(for: $0.timestamp) }
+            .sorted()
+            .removingDuplicates()
+        
+        guard !sortedDates.isEmpty else { return 0 }
+        
+        var maxStreak = 1
+        var currentStreak = 1
+        
+        for i in 1..<sortedDates.count {
+            if calendar.dateComponents([.day], from: sortedDates[i-1], to: sortedDates[i]).day == 1 {
+                currentStreak += 1
+                maxStreak = max(maxStreak, currentStreak)
+            } else {
+                currentStreak = 1
+            }
+        }
+        
+        return maxStreak
     }
     
     private func dayHasWin(_ date: Date) -> Bool {

@@ -12,7 +12,38 @@ extension Array where Element: Hashable {
 // Make models Codable for persistence
 extension HabitModel: Codable {
     enum CodingKeys: String, CodingKey {
-        case id, name, icon, frequency, unit, isActive
+        case id, name, icon, frequency, unit, isActive, trackingType, targetValue, targetPeriod, colorHex
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(icon, forKey: .icon)
+        try container.encodeIfPresent(frequency, forKey: .frequency)
+        try container.encodeIfPresent(unit, forKey: .unit)
+        try container.encode(isActive, forKey: .isActive)
+        try container.encode(trackingType, forKey: .trackingType)
+        try container.encodeIfPresent(targetValue, forKey: .targetValue)
+        try container.encode(targetPeriod, forKey: .targetPeriod)
+        try container.encodeIfPresent(colorHex, forKey: .colorHex)
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let id = try container.decode(UUID.self, forKey: .id)
+        let name = try container.decode(String.self, forKey: .name)
+        let icon = try container.decode(String.self, forKey: .icon)
+        let frequency = try container.decodeIfPresent(String.self, forKey: .frequency)
+        let unit = try container.decodeIfPresent(String.self, forKey: .unit)
+        let isActive = try container.decode(Bool.self, forKey: .isActive)
+        let trackingType = try container.decodeIfPresent(TrackingType.self, forKey: .trackingType) ?? .check
+        let targetValue = try container.decodeIfPresent(Double.self, forKey: .targetValue)
+        let targetPeriod = try container.decodeIfPresent(TargetPeriod.self, forKey: .targetPeriod) ?? .daily
+        let colorHex = try container.decodeIfPresent(String.self, forKey: .colorHex)
+        
+        self.init(id: id, name: name, icon: icon, frequency: frequency, unit: unit, isActive: isActive, 
+                  trackingType: trackingType, targetValue: targetValue, targetPeriod: targetPeriod, colorHex: colorHex)
     }
 }
 
@@ -118,6 +149,27 @@ class ZenStrideDataStore: ObservableObject {
         streakDays = 0
         streakSaverTokens = 3
         saveToUserDefaults()
+        
+        // Add default habits with new tracking modes
+        loadDefaultHabits()
+    }
+    
+    func loadDefaultHabits() {
+        // Only load defaults if no habits exist
+        if habits.isEmpty {
+            let defaultHabits = [
+                HabitModel(name: "Water", icon: "drop.fill", unit: "glasses", 
+                          trackingType: .count, targetValue: 8, targetPeriod: .daily),
+                HabitModel(name: "Exercise", icon: "figure.run", unit: "minutes",
+                          trackingType: .count, targetValue: 30, targetPeriod: .daily),
+                HabitModel(name: "Steps", icon: "figure.walk", unit: "steps",
+                          trackingType: .count, targetValue: 10000, targetPeriod: .daily),
+                HabitModel(name: "Reading", icon: "book.fill", unit: "pages",
+                          trackingType: .count, targetValue: 20, targetPeriod: .daily)
+            ]
+            
+            defaultHabits.forEach { addHabit($0) }
+        }
     }
     
     // MARK: - Persistence

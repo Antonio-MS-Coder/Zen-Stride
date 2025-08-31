@@ -5,8 +5,18 @@ struct ProfileManagementView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var showingAddHabit = false
     @State private var editingHabit: HabitModel?
-    @State private var userName = "Friend"
     @State private var showingSettings = false
+    
+    // Settings states
+    @State private var showingNotifications = false
+    @State private var showingTheme = false
+    @State private var showingHelp = false
+    @State private var showingExport = false
+    @State private var showingResetAlert = false
+    @AppStorage("userName") private var userName = "Friend"
+    @AppStorage("dailyReminderEnabled") private var dailyReminderEnabled = false
+    @AppStorage("reminderTime") private var reminderTimeString = "09:00"
+    @AppStorage("appTheme") private var appTheme = "system"
     
     var body: some View {
         NavigationView {
@@ -45,6 +55,29 @@ struct ProfileManagementView: View {
             .sheet(item: $editingHabit) { habit in
                 EditHabitView(habit: habit)
                     .environmentObject(dataStore)
+            }
+            .sheet(isPresented: $showingNotifications) {
+                NotificationsSettingsView()
+            }
+            .sheet(isPresented: $showingExport) {
+                ExportDataView()
+                    .environmentObject(dataStore)
+            }
+            .sheet(isPresented: $showingTheme) {
+                ThemeSettingsView()
+            }
+            .sheet(isPresented: $showingHelp) {
+                HelpSupportView()
+            }
+            .alert("Reset All Data?", isPresented: $showingResetAlert) {
+                Button("Cancel", role: .cancel) { }
+                Button("Reset", role: .destructive) {
+                    withAnimation {
+                        dataStore.reset()
+                    }
+                }
+            } message: {
+                Text("This will delete all your habits and logged wins. This action cannot be undone.")
             }
         }
     }
@@ -128,9 +161,7 @@ struct ProfileManagementView: View {
     // MARK: - Empty Habits View
     private var emptyHabitsView: some View {
         VStack(spacing: 16) {
-            Image(systemName: "star.circle")
-                .font(.system(size: 48))
-                .foregroundColor(.premiumGray4)
+            MascotView(mood: .neutral, size: 100)
             
             Text("No habits yet")
                 .font(.system(size: 18, weight: .medium))
@@ -170,8 +201,21 @@ struct ProfileManagementView: View {
                 SettingsRow(
                     icon: "bell",
                     title: "Reminders",
+                    subtitle: dailyReminderEnabled ? "On at \(reminderTimeString)" : "Off",
                     action: {
-                        // Handle reminders
+                        showingNotifications = true
+                    }
+                )
+                
+                Divider()
+                    .padding(.leading, 56)
+                
+                SettingsRow(
+                    icon: "square.and.arrow.up",
+                    title: "Export Data",
+                    subtitle: "CSV format",
+                    action: {
+                        showingExport = true
                     }
                 )
                 
@@ -181,8 +225,9 @@ struct ProfileManagementView: View {
                 SettingsRow(
                     icon: "moon",
                     title: "Theme",
+                    subtitle: appTheme.capitalized,
                     action: {
-                        // Handle theme
+                        showingTheme = true
                     }
                 )
                 
@@ -191,9 +236,22 @@ struct ProfileManagementView: View {
                 
                 SettingsRow(
                     icon: "questionmark.circle",
-                    title: "Help",
+                    title: "Help & Support",
                     action: {
-                        // Handle help
+                        showingHelp = true
+                    }
+                )
+                
+                Divider()
+                    .padding(.leading, 56)
+                
+                SettingsRow(
+                    icon: "arrow.counterclockwise",
+                    title: "Reset Data",
+                    subtitle: "Clear all progress",
+                    isDestructive: true,
+                    action: {
+                        showingResetAlert = true
                     }
                 )
             }
@@ -227,9 +285,12 @@ struct HabitManagementCard: View {
                     .fill(habit.color.opacity(0.1))
                     .frame(width: 48, height: 48)
                 
-                Image(systemName: habit.icon)
-                    .font(.system(size: 22))
-                    .foregroundColor(habit.color)
+                HabitIconView(
+                    icon: habit.icon,
+                    size: 22,
+                    color: habit.color,
+                    isComplete: true
+                )
             }
             
             // Name
@@ -238,8 +299,17 @@ struct HabitManagementCard: View {
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(.premiumGray1)
                 
-                if let frequency = habit.frequency {
-                    Text(frequency)
+                // Show tracking type info
+                if habit.trackingType == .count, let target = habit.targetValue {
+                    Text("\(Int(target)) \(habit.unit ?? "") daily")
+                        .font(.system(size: 14))
+                        .foregroundColor(.premiumGray3)
+                } else if habit.trackingType == .goal, let target = habit.targetValue {
+                    Text("Goal: \(Int(target)) \(habit.unit ?? "")")
+                        .font(.system(size: 14))
+                        .foregroundColor(.premiumGray3)
+                } else if habit.trackingType == .check {
+                    Text("Daily check")
                         .font(.system(size: 14))
                         .foregroundColor(.premiumGray3)
                 }
@@ -286,6 +356,8 @@ struct HabitManagementCard: View {
 struct SettingsRow: View {
     let icon: String
     let title: String
+    var subtitle: String? = nil
+    var isDestructive: Bool = false
     let action: () -> Void
     
     var body: some View {
@@ -293,12 +365,20 @@ struct SettingsRow: View {
             HStack(spacing: 16) {
                 Image(systemName: icon)
                     .font(.system(size: 20))
-                    .foregroundColor(.premiumGray3)
+                    .foregroundColor(isDestructive ? .red.opacity(0.6) : .premiumGray3)
                     .frame(width: 24, height: 24)
                 
-                Text(title)
-                    .font(.system(size: 16))
-                    .foregroundColor(.premiumGray1)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(title)
+                        .font(.system(size: 16))
+                        .foregroundColor(isDestructive ? .red : .premiumGray1)
+                    
+                    if let subtitle = subtitle {
+                        Text(subtitle)
+                            .font(.system(size: 13))
+                            .foregroundColor(isDestructive ? .red.opacity(0.6) : .premiumGray3)
+                    }
+                }
                 
                 Spacer()
                 
@@ -312,168 +392,4 @@ struct SettingsRow: View {
     }
 }
 
-// MARK: - Add Habit View
-struct AddHabitView: View {
-    @EnvironmentObject var dataStore: ZenStrideDataStore
-    @Environment(\.dismiss) private var dismiss
-    @State private var habitName = ""
-    @State private var selectedIcon = "star.fill"
-    @State private var selectedFrequency = "Daily"
-    @State private var unit = "times"
-    
-    let icons = ["star.fill", "book.fill", "figure.run", "drop.fill", 
-                 "brain.head.profile", "pencil", "figure.walk", "heart.fill",
-                 "leaf.fill", "moon.fill", "sun.max.fill", "bolt.fill"]
-    
-    let frequencies = ["Daily", "Weekly", "As needed"]
-    
-    var body: some View {
-        NavigationView {
-            ZStack {
-                Color.premiumGray6
-                    .ignoresSafeArea()
-                
-                VStack(spacing: 32) {
-                    // Name input
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("HABIT NAME")
-                            .font(.system(size: 12, weight: .semibold))
-                            .foregroundColor(.premiumGray3)
-                            .tracking(1)
-                        
-                        TextField("Enter habit name", text: $habitName)
-                            .font(.system(size: 18))
-                            .padding(16)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color.white)
-                            )
-                    }
-                    
-                    // Icon selection
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("ICON")
-                            .font(.system(size: 12, weight: .semibold))
-                            .foregroundColor(.premiumGray3)
-                            .tracking(1)
-                        
-                        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 6), spacing: 12) {
-                            ForEach(icons, id: \.self) { icon in
-                                Button {
-                                    selectedIcon = icon
-                                } label: {
-                                    ZStack {
-                                        Circle()
-                                            .fill(selectedIcon == icon ? Color.premiumIndigo.opacity(0.1) : Color.white)
-                                            .overlay(
-                                                Circle()
-                                                    .stroke(selectedIcon == icon ? Color.premiumIndigo : Color.clear, lineWidth: 2)
-                                            )
-                                        
-                                        Image(systemName: icon)
-                                            .font(.system(size: 20))
-                                            .foregroundColor(selectedIcon == icon ? .premiumIndigo : .premiumGray3)
-                                    }
-                                    .frame(width: 48, height: 48)
-                                }
-                            }
-                        }
-                    }
-                    
-                    // Frequency
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("FREQUENCY")
-                            .font(.system(size: 12, weight: .semibold))
-                            .foregroundColor(.premiumGray3)
-                            .tracking(1)
-                        
-                        HStack(spacing: 12) {
-                            ForEach(frequencies, id: \.self) { frequency in
-                                Button {
-                                    selectedFrequency = frequency
-                                } label: {
-                                    Text(frequency)
-                                        .font(.system(size: 14, weight: .medium))
-                                        .foregroundColor(selectedFrequency == frequency ? .white : .premiumGray2)
-                                        .padding(.horizontal, 16)
-                                        .padding(.vertical, 10)
-                                        .background(
-                                            Capsule()
-                                                .fill(selectedFrequency == frequency ? Color.premiumIndigo : Color.white)
-                                        )
-                                }
-                            }
-                        }
-                    }
-                    
-                    Spacer()
-                    
-                    // Save button
-                    Button {
-                        saveHabit()
-                    } label: {
-                        Text("Create Habit")
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 16)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color.premiumIndigo)
-                            )
-                    }
-                    .disabled(habitName.isEmpty)
-                    .opacity(habitName.isEmpty ? 0.5 : 1.0)
-                }
-                .padding(20)
-            }
-            .navigationTitle("New Habit")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
-            }
-        }
-    }
-    
-    private func saveHabit() {
-        let newHabit = HabitModel(
-            name: habitName,
-            icon: selectedIcon,
-            frequency: selectedFrequency,
-            unit: unit,
-            isActive: true
-        )
-        dataStore.addHabit(newHabit)
-        dismiss()
-    }
-}
 
-// MARK: - Edit Habit View
-struct EditHabitView: View {
-    let habit: HabitModel
-    @EnvironmentObject var dataStore: ZenStrideDataStore
-    @Environment(\.dismiss) private var dismiss
-    @State private var habitName: String
-    @State private var selectedIcon: String
-    @State private var selectedFrequency: String
-    
-    init(habit: HabitModel) {
-        self.habit = habit
-        self._habitName = State(initialValue: habit.name)
-        self._selectedIcon = State(initialValue: habit.icon)
-        self._selectedFrequency = State(initialValue: habit.frequency ?? "Daily")
-    }
-    
-    var body: some View {
-        AddHabitView() // Reuse the add view for editing
-            .environmentObject(dataStore)
-            .navigationTitle("Edit Habit")
-            .onAppear {
-                // Pre-fill the fields
-            }
-    }
-}
