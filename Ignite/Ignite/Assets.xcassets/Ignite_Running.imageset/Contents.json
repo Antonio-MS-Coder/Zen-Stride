@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Ignite_Running.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

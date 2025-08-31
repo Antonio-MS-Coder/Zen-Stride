@@ -1,4 +1,4 @@
-# ZenStride Premium Design System Style Guide
+# Ignite Premium Design System Style Guide
 
 ## Design Philosophy
 
