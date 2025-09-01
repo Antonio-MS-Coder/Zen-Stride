@@ -48,8 +48,8 @@ struct LogWinsView: View {
                         todaysWinsSection
                     }
                     
-                    // Motivation state when no wins yet
-                    if dataStore.wins.isEmpty {
+                    // Motivation state when no wins today
+                    if todaysWins.isEmpty {
                         motivationView
                     }
                 }
@@ -175,20 +175,20 @@ struct LogWinsView: View {
     // MARK: - Motivation View
     private var motivationView: some View {
         VStack(spacing: 24) {
-            MascotView(mood: .neutral, size: 120)
+            MascotView(mood: .waving, size: 120)
             
             VStack(spacing: 8) {
-                Text("Ready to start?")
+                Text("Ready to crush today?")
                     .font(.system(size: 20, weight: .semibold))
                     .foregroundColor(ThemeManager.shared.primaryText)
                 
-                Text("Tap any habit above to log your first win!")
+                Text("Tap any habit above to start building momentum!")
                     .font(.system(size: 16))
                     .foregroundColor(ThemeManager.shared.secondaryText)
                     .multilineTextAlignment(.center)
             }
             
-            Text("Every journey begins with a single step")
+            Text("Your future self will thank you")
                 .font(.system(size: 14))
                 .foregroundColor(ThemeManager.shared.tertiaryText)
                 .italic()

@@ -1,0 +1,336 @@
+{
+  "source": "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Screens/Settings/NotificationsSettingsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Notifications",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 146
+        }
+      },
+      {
+        "comment": "",
+        "key": "Notification Permission",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 165
+        }
+      },
+      {
+        "comment": "",
+        "key": "DAILY REMINDER",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "Daily Reminder",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Get reminded to log your wins",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 47
+        }
+      },
+      {
+        "comment": "",
+        "key": "REMINDER TIME",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "Reminder Time",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "PREVIEW",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 108
+        }
+      },
+      {
+        "comment": "",
+        "key": "Time to log your wins!",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "Your habits are waiting for you 💪",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 123
+        }
+      },
+      {
+        "comment": "",
+        "key": "Done",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 150
+        }
+      },
+      {
+        "comment": "",
+        "key": "Settings",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 166
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 171
+        }
+      },
+      {
+        "comment": "",
+        "key": "Please enable notifications in Settings to receive daily reminders.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 175
+        }
+      },
+      {
+        "comment": "",
+        "key": "Add reminders for specific habits",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 243
+        }
+      },
+      {
+        "comment": "",
+        "key": "HABIT REMINDERS",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 226
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 346
+        }
+      },
+      {
+        "comment": "",
+        "key": "Edit",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 356
+        }
+      },
+      {
+        "comment": "",
+        "key": "Delete",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 357
+        }
+      },
+      {
+        "comment": "",
+        "key": "Add Reminder",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 502
+        }
+      },
+      {
+        "comment": "",
+        "key": "HABIT NAME",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 415
+        }
+      },
+      {
+        "comment": "",
+        "key": "e.g., Morning Meditation",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 420
+        }
+      },
+      {
+        "comment": "",
+        "key": "REMINDER TIME",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 432
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 437
+        }
+      },
+      {
+        "comment": "",
+        "key": "REPEAT",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 444
+        }
+      },
+      {
+        "comment": "",
+        "key": "Encouraging message...",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 488
+        }
+      },
+      {
+        "comment": "",
+        "key": "MESSAGE",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 474
+        }
+      },
+      {
+        "comment": "",
+        "key": "Random",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 481
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 506
+        }
+      },
+      {
+        "comment": "",
+        "key": "Save",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 509
+        }
+      },
+      {
+        "comment": "",
+        "key": "Edit Reminder",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 654
+        }
+      },
+      {
+        "comment": "",
+        "key": "HABIT NAME",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 577
+        }
+      },
+      {
+        "comment": "",
+        "key": "Habit name",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 582
+        }
+      },
+      {
+        "comment": "",
+        "key": "REMINDER TIME",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 594
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 599
+        }
+      },
+      {
+        "comment": "",
+        "key": "REPEAT",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 606
+        }
+      },
+      {
+        "comment": "",
+        "key": "MESSAGE",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 635
+        }
+      },
+      {
+        "comment": "",
+        "key": "Message",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 640
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 658
+        }
+      },
+      {
+        "comment": "",
+        "key": "Save",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 661
+        }
+      }
+    ]
+  },
+  "version": 1
+}

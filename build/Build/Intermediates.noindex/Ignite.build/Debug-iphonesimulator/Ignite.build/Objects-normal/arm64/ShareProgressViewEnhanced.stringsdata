@@ -1,0 +1,256 @@
+{
+  "source": "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Screens/Sharing/ShareProgressViewEnhanced.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Share Progress",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 108
+        }
+      },
+      {
+        "comment": "",
+        "key": "Share Status",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 117
+        }
+      },
+      {
+        "comment": "",
+        "key": "Generation Error",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 122
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 112
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 118
+        }
+      },
+      {
+        "comment": "",
+        "key": "Try Again",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 123
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 126
+        }
+      },
+      {
+        "comment": "",
+        "key": "PREVIEW",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 139
+        }
+      },
+      {
+        "comment": "",
+        "key": "View full size preview",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 163
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fit to Screen",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 151
+        }
+      },
+      {
+        "comment": "",
+        "key": "Actual Size",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 151
+        }
+      },
+      {
+        "comment": "",
+        "key": "Progress card preview showing %lld%% completion",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 213
+        }
+      },
+      {
+        "comment": "",
+        "key": "FORMAT",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 224
+        }
+      },
+      {
+        "comment": "",
+        "key": "THEME",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 273
+        }
+      },
+      {
+        "comment": "",
+        "key": "Include Streak",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 305
+        }
+      },
+      {
+        "comment": "",
+        "key": "Shows your current habit streak in the shared image",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 307
+        }
+      },
+      {
+        "comment": "",
+        "key": "Save to Photos",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 329
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ignite",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 528
+        }
+      },
+      {
+        "comment": "",
+        "key": "Build better habits, one day at a time",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 532
+        }
+      },
+      {
+        "comment": "",
+        "key": "igniteapp.com",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 578
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 630
+        }
+      },
+      {
+        "comment": "",
+        "key": "of %lld %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 635
+        }
+      },
+      {
+        "comment": "",
+        "key": "igniteapp.com",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 800
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ignite",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 810
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 847
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld/%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 852
+        }
+      },
+      {
+        "comment": "",
+        "key": "Streak",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 913
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 909
+        }
+      },
+      {
+        "comment": "",
+        "key": "Total",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 927
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 923
+        }
+      },
+      {
+        "comment": "",
+        "key": "Daily",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 941
+        }
+      }
+    ]
+  },
+  "version": 1
+}

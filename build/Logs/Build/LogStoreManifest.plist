@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>11</integer>
+	<key>logs</key>
+	<dict>
+		<key>D47BC77A-DE94-42AE-9356-E93040637984</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>D47BC77A-DE94-42AE-9356-E93040637984.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Ignite project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Ignite</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project Ignite with scheme Ignite</string>
+			<key>timeStartedRecording</key>
+			<real>778316819.28408098</real>
+			<key>timeStoppedRecording</key>
+			<real>778316827.286726</real>
+			<key>title</key>
+			<string>Building project Ignite with scheme Ignite</string>
+			<key>uniqueIdentifier</key>
+			<string>D47BC77A-DE94-42AE-9356-E93040637984</string>
+		</dict>
+		<key>EDD244BB-CE01-4660-8E44-C6C35C31B408</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>EDD244BB-CE01-4660-8E44-C6C35C31B408.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Ignite project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Ignite</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project Ignite with scheme Ignite</string>
+			<key>timeStartedRecording</key>
+			<real>778316617.42568696</real>
+			<key>timeStoppedRecording</key>
+			<real>778316625.47463</real>
+			<key>title</key>
+			<string>Building project Ignite with scheme Ignite</string>
+			<key>uniqueIdentifier</key>
+			<string>EDD244BB-CE01-4660-8E44-C6C35C31B408</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

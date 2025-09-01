@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>colors</key>
+	<array/>
+	<key>images</key>
+	<array>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameIgniteCelebrating</string>
+			<key>relativePath</key>
+			<string>./Ignite_Celebrating.imageset</string>
+			<key>swiftSymbol</key>
+			<string>igniteCelebrating</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameIgniteHeart</string>
+			<key>relativePath</key>
+			<string>./Ignite_Heart.imageset</string>
+			<key>swiftSymbol</key>
+			<string>igniteHeart</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameIgniteLeyendo</string>
+			<key>relativePath</key>
+			<string>./Ignite_Leyendo.imageset</string>
+			<key>swiftSymbol</key>
+			<string>igniteLeyendo</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameIgniteMeditation</string>
+			<key>relativePath</key>
+			<string>./Ignite_Meditation.imageset</string>
+			<key>swiftSymbol</key>
+			<string>igniteMeditation</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameIgniteNeutral</string>
+			<key>relativePath</key>
+			<string>./Ignite_Neutral.imageset</string>
+			<key>swiftSymbol</key>
+			<string>igniteNeutral</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameIgniteRunning</string>
+			<key>relativePath</key>
+			<string>./Ignite_Running.imageset</string>
+			<key>swiftSymbol</key>
+			<string>igniteRunning</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameIgniteSad</string>
+			<key>relativePath</key>
+			<string>./Ignite_Sad.imageset</string>
+			<key>swiftSymbol</key>
+			<string>igniteSad</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameIgniteSleep</string>
+			<key>relativePath</key>
+			<string>./Ignite_Sleep.imageset</string>
+			<key>swiftSymbol</key>
+			<string>igniteSleep</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameIgniteThinking</string>
+			<key>relativePath</key>
+			<string>./Ignite_Thinking.imageset</string>
+			<key>swiftSymbol</key>
+			<string>igniteThinking</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameIgniteTrophy</string>
+			<key>relativePath</key>
+			<string>./Ignite_Trophy.imageset</string>
+			<key>swiftSymbol</key>
+			<string>igniteTrophy</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameIgniteWaving</string>
+			<key>relativePath</key>
+			<string>./Ignite_Waving.imageset</string>
+			<key>swiftSymbol</key>
+			<string>igniteWaving</string>
+		</dict>
+	</array>
+	<key>symbols</key>
+	<array/>
+</dict>
+</plist>

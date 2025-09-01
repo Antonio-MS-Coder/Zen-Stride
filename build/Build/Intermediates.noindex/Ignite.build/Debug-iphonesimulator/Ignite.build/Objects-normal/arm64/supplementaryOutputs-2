@@ -1,0 +1,36 @@
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Components/ContextualCelebration.swift":
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ContextualCelebration.swiftdeps"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ContextualCelebration.d"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ContextualCelebration.swiftconstvalues"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ContextualCelebration.dia"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ContextualCelebration.o"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Components/PremiumComponents.swift":
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/PremiumComponents.swiftconstvalues"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/PremiumComponents.d"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/PremiumComponents.swiftdeps"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/PremiumComponents.dia"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/PremiumComponents.o"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Screens/Settings/ThemeSettingsView.swift":
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ThemeSettingsView.d"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ThemeSettingsView.swiftconstvalues"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ThemeSettingsView.swiftdeps"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ThemeSettingsView.o"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ThemeSettingsView.dia"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Components/HabitIconView.swift":
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/HabitIconView.o"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/HabitIconView.swiftdeps"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/HabitIconView.dia"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/HabitIconView.d"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/HabitIconView.swiftconstvalues"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Screens/Profile/ProfileSettingsView.swift":
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProfileSettingsView.swiftdeps"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProfileSettingsView.swiftconstvalues"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProfileSettingsView.dia"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProfileSettingsView.o"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProfileSettingsView.d"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Components/WinCelebrationView.swift":
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/WinCelebrationView.swiftconstvalues"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/WinCelebrationView.swiftdeps"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/WinCelebrationView.d"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/WinCelebrationView.dia"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/WinCelebrationView.o"

@@ -1,0 +1,30 @@
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Screens/Goals/UpdateProgressView.swift":
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/UpdateProgressView.dia"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/UpdateProgressView.swiftconstvalues"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/UpdateProgressView.d"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/UpdateProgressView.o"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/UpdateProgressView.swiftdeps"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Screens/Settings/NotificationsSettingsView.swift":
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/NotificationsSettingsView.swiftdeps"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/NotificationsSettingsView.swiftconstvalues"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/NotificationsSettingsView.dia"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/NotificationsSettingsView.o"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/NotificationsSettingsView.d"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/Core/Models/Goal.swift":
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/Goal.dia"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/Goal.d"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/Goal.o"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/Goal.swiftdeps"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/Goal.swiftconstvalues"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Screens/Core/AddHabitView.swift":
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/AddHabitView.d"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/AddHabitView.swiftconstvalues"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/AddHabitView.dia"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/AddHabitView.swiftdeps"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/AddHabitView.o"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Screens/Goals/AddGoalView.swift":
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/AddGoalView.d"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/AddGoalView.swiftconstvalues"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/AddGoalView.o"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/AddGoalView.swiftdeps"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/AddGoalView.dia"

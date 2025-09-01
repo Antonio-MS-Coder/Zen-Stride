@@ -1,0 +1,30 @@
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Navigation/SimpleTabView.swift":
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/SimpleTabView.o"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/SimpleTabView.d"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/SimpleTabView.swiftconstvalues"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/SimpleTabView.swiftdeps"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/SimpleTabView.dia"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Screens/Core/ProfileManagementView.swift":
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProfileManagementView.swiftconstvalues"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProfileManagementView.dia"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProfileManagementView.d"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProfileManagementView.o"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProfileManagementView.swiftdeps"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/DerivedSources/CoreDataGenerated/Ignite/Habit+CoreDataClass.swift":
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/Habit+CoreDataClass.dia"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/Habit+CoreDataClass.d"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/Habit+CoreDataClass.o"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/Habit+CoreDataClass.swiftdeps"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/Habit+CoreDataClass.swiftconstvalues"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/DerivedSources/CoreDataGenerated/Ignite/Habit+CoreDataProperties.swift":
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/Habit+CoreDataProperties.swiftconstvalues"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/Habit+CoreDataProperties.o"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/Habit+CoreDataProperties.swiftdeps"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/Habit+CoreDataProperties.dia"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/Habit+CoreDataProperties.d"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Screens/Settings/ExportDataView.swift":
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ExportDataView.o"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ExportDataView.swiftconstvalues"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ExportDataView.d"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ExportDataView.swiftdeps"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ExportDataView.dia"

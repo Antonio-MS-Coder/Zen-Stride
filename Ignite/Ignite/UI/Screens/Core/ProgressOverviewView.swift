@@ -341,6 +341,8 @@ struct HabitDetailView: View {
     @State private var editingWin: MicroWin?
     @State private var showingDeleteAlert = false
     @State private var winToDelete: MicroWin?
+    @State private var selectedVisualization = 0
+    @State private var showingShareSheet = false
     
     private var habitWins: [MicroWin] {
         wins.filter { $0.habitName == habit.name }
@@ -354,8 +356,8 @@ struct HabitDetailView: View {
                 
                 ScrollView {
                     VStack(spacing: 32) {
-                        // Visual progress circle
-                        progressCircleSection
+                        // Swipeable visualizations
+                        visualizationSection
                         
                         // Stats grid
                         statsGridSection
@@ -373,12 +375,56 @@ struct HabitDetailView: View {
             .navigationTitle(habit.name)
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        showingShareSheet = true
+                    } label: {
+                        Image(systemName: "square.and.arrow.up")
+                    }
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
                         dismiss()
                     }
                 }
             }
+            .sheet(isPresented: $showingShareSheet) {
+                ShareProgressViewEnhanced(habit: habit, wins: habitWins, selectedVisualization: selectedVisualization)
+            }
+        }
+    }
+    
+    // MARK: - Swipeable Visualizations
+    private var visualizationSection: some View {
+        VStack(spacing: 16) {
+            // Page indicators
+            HStack(spacing: 8) {
+                ForEach(0..<4) { index in
+                    Circle()
+                        .fill(selectedVisualization == index ? habit.color : ThemeManager.shared.dividerColor)
+                        .frame(width: 6, height: 6)
+                }
+            }
+            
+            TabView(selection: $selectedVisualization) {
+                // Progress Circle
+                progressCircleSection
+                    .tag(0)
+                
+                // Line Graph
+                LineGraphView(habit: habit, wins: habitWins)
+                    .tag(1)
+                
+                // Weekly Breakdown
+                WeeklyBreakdownView(habit: habit, wins: habitWins)
+                    .tag(2)
+                
+                // Calendar Heatmap
+                CalendarHeatmapView(habit: habit, wins: habitWins)
+                    .tag(3)
+            }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            .frame(height: 300)
         }
     }
     
@@ -878,5 +924,448 @@ struct EditWinView: View {
         
         dataStore.updateWin(updatedWin)
         dismiss()
+    }
+}
+
+// MARK: - Line Graph View
+struct LineGraphView: View {
+    let habit: HabitModel
+    let wins: [MicroWin]
+    @State private var selectedPeriod = 0 // 0: Week, 1: Month, 2: Year
+    
+    private var periodOptions: [String] {
+        ["7 Days", "30 Days", "1 Year"]
+    }
+    
+    private var graphData: [(date: Date, value: Double)] {
+        let calendar = Calendar.current
+        let endDate = Date()
+        let days = selectedPeriod == 0 ? 7 : (selectedPeriod == 1 ? 30 : 365)
+        let startDate = calendar.date(byAdding: .day, value: -days, to: endDate)!
+        
+        // Group wins by day and sum values
+        var dailyData: [Date: Double] = [:]
+        
+        for dayOffset in 0..<days {
+            let date = calendar.date(byAdding: .day, value: -dayOffset, to: endDate)!
+            let dayStart = calendar.startOfDay(for: date)
+            dailyData[dayStart] = 0
+        }
+        
+        for win in wins {
+            let dayStart = calendar.startOfDay(for: win.timestamp)
+            if dayStart >= startDate {
+                let value = Double(win.value) ?? 1
+                dailyData[dayStart, default: 0] += value
+            }
+        }
+        
+        return dailyData.map { ($0.key, $0.value) }
+            .sorted { $0.date < $1.date }
+    }
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            // Period selector
+            Picker("Period", selection: $selectedPeriod) {
+                ForEach(0..<periodOptions.count, id: \.self) { index in
+                    Text(periodOptions[index]).tag(index)
+                }
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(.horizontal)
+            
+            // Graph
+            GeometryReader { geometry in
+                let data = graphData
+                let maxValue = data.map { $0.value }.max() ?? 1
+                let width = geometry.size.width
+                let height = geometry.size.height - 40
+                
+                ZStack {
+                    // Grid lines
+                    ForEach(0..<5) { index in
+                        Path { path in
+                            let y = height * CGFloat(index) / 4
+                            path.move(to: CGPoint(x: 0, y: y))
+                            path.addLine(to: CGPoint(x: width, y: y))
+                        }
+                        .stroke(ThemeManager.shared.dividerColor, lineWidth: 0.5)
+                    }
+                    
+                    // Line graph
+                    if !data.isEmpty {
+                        Path { path in
+                            for (index, point) in data.enumerated() {
+                                let x = width * CGFloat(index) / CGFloat(max(data.count - 1, 1))
+                                let y = height * (1 - CGFloat(point.value / max(maxValue, 1)))
+                                
+                                if index == 0 {
+                                    path.move(to: CGPoint(x: x, y: y))
+                                } else {
+                                    path.addLine(to: CGPoint(x: x, y: y))
+                                }
+                            }
+                        }
+                        .stroke(
+                            LinearGradient(
+                                colors: [habit.color.opacity(0.6), habit.color],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            ),
+                            style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round)
+                        )
+                        
+                        // Area under curve
+                        Path { path in
+                            for (index, point) in data.enumerated() {
+                                let x = width * CGFloat(index) / CGFloat(max(data.count - 1, 1))
+                                let y = height * (1 - CGFloat(point.value / max(maxValue, 1)))
+                                
+                                if index == 0 {
+                                    path.move(to: CGPoint(x: x, y: height))
+                                    path.addLine(to: CGPoint(x: x, y: y))
+                                } else {
+                                    path.addLine(to: CGPoint(x: x, y: y))
+                                }
+                            }
+                            
+                            if !data.isEmpty {
+                                path.addLine(to: CGPoint(x: width, y: height))
+                                path.closeSubpath()
+                            }
+                        }
+                        .fill(
+                            LinearGradient(
+                                colors: [habit.color.opacity(0.1), habit.color.opacity(0.3)],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                        
+                        // Data points
+                        ForEach(Array(data.enumerated()), id: \.offset) { index, point in
+                            let x = width * CGFloat(index) / CGFloat(max(data.count - 1, 1))
+                            let y = height * (1 - CGFloat(point.value / max(maxValue, 1)))
+                            
+                            Circle()
+                                .fill(habit.color)
+                                .frame(width: 6, height: 6)
+                                .position(x: x, y: y)
+                        }
+                    }
+                    
+                    // Y-axis labels
+                    VStack {
+                        Text("\(Int(maxValue))")
+                            .font(.system(size: 10))
+                            .foregroundColor(ThemeManager.shared.tertiaryText)
+                        Spacer()
+                        Text("0")
+                            .font(.system(size: 10))
+                            .foregroundColor(ThemeManager.shared.tertiaryText)
+                    }
+                    .frame(width: 30)
+                    .position(x: -15, y: height / 2)
+                }
+                .padding(.top, 20)
+            }
+        }
+    }
+}
+
+// MARK: - Weekly Breakdown View
+struct WeeklyBreakdownView: View {
+    let habit: HabitModel
+    let wins: [MicroWin]
+    @State private var selectedWeek = 0
+    
+    private var weekData: [(day: String, value: Double, date: Date)] {
+        let calendar = Calendar.current
+        let today = Date()
+        let weekOffset = -selectedWeek * 7
+        
+        var data: [(String, Double, Date)] = []
+        let dayFormatter = DateFormatter()
+        dayFormatter.dateFormat = "EEE"
+        
+        for dayIndex in 0..<7 {
+            let date = calendar.date(byAdding: .day, value: weekOffset - (6 - dayIndex), to: today)!
+            let dayWins = wins.filter { calendar.isDate($0.timestamp, inSameDayAs: date) }
+            let total = dayWins.reduce(0) { $0 + (Double($1.value) ?? 1) }
+            
+            data.append((dayFormatter.string(from: date), total, date))
+        }
+        
+        return data
+    }
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            // Week navigation
+            HStack {
+                Button {
+                    selectedWeek += 1
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(ThemeManager.shared.primaryText)
+                }
+                
+                Spacer()
+                
+                Text(weekTitle)
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(ThemeManager.shared.primaryText)
+                
+                Spacer()
+                
+                Button {
+                    if selectedWeek > 0 {
+                        selectedWeek -= 1
+                    }
+                } label: {
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(selectedWeek > 0 ? ThemeManager.shared.primaryText : ThemeManager.shared.dividerColor)
+                }
+                .disabled(selectedWeek == 0)
+            }
+            .padding(.horizontal)
+            
+            // Bar chart
+            HStack(alignment: .bottom, spacing: 12) {
+                ForEach(weekData, id: \.day) { item in
+                    VStack(spacing: 8) {
+                        // Value label
+                        if item.value > 0 {
+                            Text("\(Int(item.value))")
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundColor(habit.color)
+                        }
+                        
+                        // Bar
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(
+                                Calendar.current.isDateInToday(item.date) ?
+                                habit.color : habit.color.opacity(0.7)
+                            )
+                            .frame(height: max(CGFloat(item.value) * 20, item.value > 0 ? 10 : 0))
+                            .frame(maxHeight: 150)
+                        
+                        // Day label
+                        Text(item.day)
+                            .font(.system(size: 12))
+                            .foregroundColor(
+                                Calendar.current.isDateInToday(item.date) ?
+                                ThemeManager.shared.primaryText :
+                                ThemeManager.shared.secondaryText
+                            )
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+            }
+            .padding(.horizontal)
+            
+            // Weekly summary
+            HStack(spacing: 20) {
+                VStack(spacing: 4) {
+                    Text("\(weekTotal)")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(habit.color)
+                    Text("Total")
+                        .font(.system(size: 12))
+                        .foregroundColor(ThemeManager.shared.secondaryText)
+                }
+                
+                VStack(spacing: 4) {
+                    Text("\(activeDays)/7")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(ThemeManager.shared.primaryText)
+                    Text("Days")
+                        .font(.system(size: 12))
+                        .foregroundColor(ThemeManager.shared.secondaryText)
+                }
+                
+                VStack(spacing: 4) {
+                    Text(String(format: "%.1f", weekAverage))
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(ThemeManager.shared.primaryText)
+                    Text("Daily Avg")
+                        .font(.system(size: 12))
+                        .foregroundColor(ThemeManager.shared.secondaryText)
+                }
+            }
+            .padding(.horizontal, 40)
+            .padding(.vertical, 12)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(ThemeManager.shared.secondaryBackground.opacity(0.5))
+            )
+        }
+    }
+    
+    private var weekTitle: String {
+        if selectedWeek == 0 {
+            return "This Week"
+        } else if selectedWeek == 1 {
+            return "Last Week"
+        } else {
+            return "\(selectedWeek) Weeks Ago"
+        }
+    }
+    
+    private var weekTotal: Int {
+        Int(weekData.reduce(0) { $0 + $1.value })
+    }
+    
+    private var activeDays: Int {
+        weekData.filter { $0.value > 0 }.count
+    }
+    
+    private var weekAverage: Double {
+        let total = weekData.reduce(0) { $0 + $1.value }
+        return total / 7.0
+    }
+}
+
+// MARK: - Calendar Heatmap View
+struct CalendarHeatmapView: View {
+    let habit: HabitModel
+    let wins: [MicroWin]
+    @State private var selectedMonth = 0
+    
+    private var monthData: [Date: Double] {
+        let calendar = Calendar.current
+        var data: [Date: Double] = [:]
+        
+        for win in wins {
+            let dayStart = calendar.startOfDay(for: win.timestamp)
+            data[dayStart, default: 0] += Double(win.value) ?? 1
+        }
+        
+        return data
+    }
+    
+    private var currentMonth: Date {
+        Calendar.current.date(byAdding: .month, value: -selectedMonth, to: Date()) ?? Date()
+    }
+    
+    private var daysInMonth: [Date] {
+        let calendar = Calendar.current
+        let range = calendar.range(of: .day, in: .month, for: currentMonth)!
+        let firstOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: currentMonth))!
+        
+        return range.compactMap { day in
+            calendar.date(byAdding: .day, value: day - 1, to: firstOfMonth)
+        }
+    }
+    
+    private var maxValue: Double {
+        monthData.values.max() ?? 1
+    }
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            // Month navigation
+            HStack {
+                Button {
+                    selectedMonth += 1
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(ThemeManager.shared.primaryText)
+                }
+                
+                Spacer()
+                
+                Text(monthTitle)
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(ThemeManager.shared.primaryText)
+                
+                Spacer()
+                
+                Button {
+                    if selectedMonth > 0 {
+                        selectedMonth -= 1
+                    }
+                } label: {
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(selectedMonth > 0 ? ThemeManager.shared.primaryText : ThemeManager.shared.dividerColor)
+                }
+                .disabled(selectedMonth == 0)
+            }
+            .padding(.horizontal)
+            
+            // Calendar grid
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 4), count: 7), spacing: 4) {
+                // Day headers
+                ForEach(["S", "M", "T", "W", "T", "F", "S"], id: \.self) { day in
+                    Text(day)
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(ThemeManager.shared.secondaryText)
+                }
+                
+                // Empty cells for alignment
+                ForEach(0..<firstWeekdayOffset, id: \.self) { _ in
+                    Color.clear
+                        .frame(height: 32)
+                }
+                
+                // Days
+                ForEach(daysInMonth, id: \.self) { date in
+                    let value = monthData[Calendar.current.startOfDay(for: date)] ?? 0
+                    let intensity = value > 0 ? max(0.3, min(1.0, value / maxValue)) : 0
+                    
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(value > 0 ? habit.color.opacity(intensity) : ThemeManager.shared.secondaryBackground)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .stroke(
+                                        Calendar.current.isDateInToday(date) ? habit.color : Color.clear,
+                                        lineWidth: 2
+                                    )
+                            )
+                        
+                        Text("\(Calendar.current.component(.day, from: date))")
+                            .font(.system(size: 11))
+                            .foregroundColor(
+                                value > 0 && intensity > 0.6 ? .white : ThemeManager.shared.primaryText
+                            )
+                    }
+                    .frame(height: 32)
+                }
+            }
+            .padding(.horizontal)
+            
+            // Legend
+            HStack(spacing: 20) {
+                HStack(spacing: 4) {
+                    ForEach([0.0, 0.3, 0.6, 1.0], id: \.self) { intensity in
+                        RoundedRectangle(cornerRadius: 2)
+                            .fill(intensity == 0 ? ThemeManager.shared.secondaryBackground : habit.color.opacity(intensity))
+                            .frame(width: 16, height: 16)
+                    }
+                }
+                
+                Text("Less")
+                    .font(.system(size: 11))
+                    .foregroundColor(ThemeManager.shared.tertiaryText)
+                
+                Text("More")
+                    .font(.system(size: 11))
+                    .foregroundColor(ThemeManager.shared.tertiaryText)
+            }
+        }
+    }
+    
+    private var monthTitle: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM yyyy"
+        return formatter.string(from: currentMonth)
+    }
+    
+    private var firstWeekdayOffset: Int {
+        let calendar = Calendar.current
+        let firstOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: currentMonth))!
+        return calendar.component(.weekday, from: firstOfMonth) - 1
     }
 }

@@ -1,0 +1,36 @@
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/IgniteApp.swift":
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/IgniteApp.dia"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/IgniteApp.swiftconstvalues"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/IgniteApp.d"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/IgniteApp.swiftdeps"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/IgniteApp.o"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Components/CelebrationOverlay.swift":
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/CelebrationOverlay.o"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/CelebrationOverlay.d"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/CelebrationOverlay.swiftdeps"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/CelebrationOverlay.swiftconstvalues"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/CelebrationOverlay.dia"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Theme/NotionTheme.swift":
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/NotionTheme.o"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/NotionTheme.swiftdeps"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/NotionTheme.swiftconstvalues"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/NotionTheme.d"
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/NotionTheme.dia"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Screens/Progress/ProgressInsightsView.swift":
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProgressInsightsView.dia"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProgressInsightsView.d"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProgressInsightsView.swiftdeps"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProgressInsightsView.o"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProgressInsightsView.swiftconstvalues"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Components/MascotView.swift":
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/MascotView.dia"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/MascotView.swiftdeps"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/MascotView.o"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/MascotView.swiftconstvalues"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/MascotView.d"
+"/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Screens/Core/ProgressOverviewView.swift":
+  diagnostics: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProgressOverviewView.dia"
+  object: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProgressOverviewView.o"
+  const-values: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProgressOverviewView.swiftconstvalues"
+  dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProgressOverviewView.d"
+  swift-dependencies: "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/build/Build/Intermediates.noindex/Ignite.build/Debug-iphonesimulator/Ignite.build/Objects-normal/arm64/ProgressOverviewView.swiftdeps"

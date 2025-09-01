@@ -1,0 +1,96 @@
+{
+  "source": "/Users/tonomurrieta/Desktop/AI Generated/Codigo/ZenStride/Ignite/Ignite/UI/Screens/QuickLog/QuickLogView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "QUICK WIN",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "LOG A WIN",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tap to log",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 139
+        }
+      },
+      {
+        "comment": "",
+        "key": "What did you accomplish?",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 139
+        }
+      },
+      {
+        "comment": "",
+        "key": "More options",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 229
+        }
+      },
+      {
+        "comment": "",
+        "key": "HOW MUCH?",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 286
+        }
+      },
+      {
+        "comment": "",
+        "key": "Custom",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 308
+        }
+      },
+      {
+        "comment": "",
+        "key": "Enter amount",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 607
+        }
+      },
+      {
+        "comment": "",
+        "key": "0",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 612
+        }
+      },
+      {
+        "comment": "",
+        "key": "Log This Win",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 657
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 676
+        }
+      }
+    ]
+  },
+  "version": 1
+}
